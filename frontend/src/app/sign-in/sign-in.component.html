@@ -1,0 +1,17 @@
+
+<div class="sign-in-container">
+    <div class="sign-in-camp">
+        <div class="sign-in-header upper-case">Sign-In</div>
+        <form FormGroup="signInForm">
+            <div class="sign-in-header">
+                <input type="text" class="sign-in-field" formControlName="username" placeholder="Username"> 
+            </div>
+            <div class="sign-in-header">    
+                <input type="password" class="sign-in-field" formContorlName="password" placeholder="Password">
+            </div>
+            <div class="sign-in-header">    
+                <button type="button" class="sign-in-field submit" (click)="onSubmit(signInForm.value)" >Submit</button>
+            </div>
+        </form>
+    </div>
+</div>

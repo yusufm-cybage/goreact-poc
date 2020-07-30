@@ -1,0 +1,33 @@
+.sign-in-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    flex: 1 0 auto;
+    .sign-in-camp {
+        text-align: center;
+        padding: 30px 50px;
+        background: #ffffff;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        .sign-in-header {
+            padding: 10px 0;
+        }
+        .sign-in-field {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid gainsboro;
+        }
+        .submit {
+            background: #4CAF50;
+            color: #ffffff;
+            border: 1px solid #4CAF50;
+            outline: 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+    }
+}
