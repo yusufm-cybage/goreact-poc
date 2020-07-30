@@ -20,7 +20,7 @@ class MediaPostController extends Controller
         $errorCode = '';
         $errorMsg = '';
         $validator = Validator::make($request->all(),[
-            'file' => 'required|mimes:jpeg,pdf,mp4',
+            'file' => 'required|mimes:jpeg,jpg,pdf,mp4',
             'title' =>'required',
             'description' =>'required',
         ]);
@@ -30,7 +30,7 @@ class MediaPostController extends Controller
                     'file' => 'required|mimes:mp4|max:10240',
                 ]); 
             }
-            if($request->file->extension()=='jpeg,pdf'){
+            if($request->file->extension()=='jpeg,jpg,pdf'){
                 $validator = Validator::make($request->all(),[
                     'file' => 'required|mimes:jpeg,pdf|max:1024',
                 ]); 
