@@ -19,6 +19,8 @@ export class SignInComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     });
+    localStorage.removeItem('token');
+    this.utility.loggedIn.emit(false);
   }
   
   ngOnInit(): void {
@@ -27,8 +29,14 @@ export class SignInComponent implements OnInit {
   onSubmit(value) {
     console.log(value)
     this.loginSuccess(value);
+    localStorage.setItem('token', 'token');
+    this.utility.loggedIn.emit(true);
     if(value) {
-      // this.authService.login(value).subscribe(
+      let loginData = {
+        email: value.username,
+        password: value.password
+      }
+      // this.authService.login(loginData).subscribe(
       //   res => this.loginSuccess(res),
       //   error => this.utility.displayError(error)
       // );
@@ -38,6 +46,9 @@ export class SignInComponent implements OnInit {
   loginSuccess(data) {
     console.log('Login Successfull');
     this.router.navigate(['home']);
+    localStorage.setItem('token', 'token');
+    this.utility.loggedIn.emit(true);
+
   }
 
 

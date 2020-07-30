@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\MediaPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+    Route::post('mediapost', 'API\MediaPostController@store_mediapost');
+    Route::get('showmediapost/{id}', 'API\MediaPostController@show_mediapost');
+
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
@@ -24,3 +29,4 @@ use Illuminate\Support\Facades\Route;
 
     Route::middleware('auth:api')->get('/logout', 'API\AuthController@logout');
     Route::middleware('auth:api')->get('/user', 'API\AuthController@user');
+    

@@ -15,7 +15,8 @@ export class UserService {
   createHeader() {
     return (this.header = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: 'bearer ' + localStorage.getItem('token')
+      'X-Requested-With':'XMLHttpRequest',
+      'bearer': localStorage.getItem('token')
     }));
   }
 
@@ -27,5 +28,9 @@ export class UserService {
 
   uploadFile(data):Observable<any> {
     return this.http.post(this.baseURL + '', data, { headers: this.createHeader()})
+  }
+
+  logOutUser(): Observable<any> {
+    return this.http.get(this.baseURL + 'user', { headers: this.createHeader()})
   }
 }
