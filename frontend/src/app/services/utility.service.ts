@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output} from '@angular/core';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
-
+  @Output() loggedIn: EventEmitter<any> = new EventEmitter(true);
   constructor(private router: Router) { }
 
   displayError(error) {

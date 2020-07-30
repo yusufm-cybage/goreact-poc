@@ -10,12 +10,13 @@ export class AuthService {
   header: any;
   constructor(private http: HttpClient) { 
     this.header = new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Requested-With':'XMLHttpRequest'
     });
   }
 
   login(credentials): Observable<any> {
-    return this.http.post(this.baseURL + '', credentials, {
+    return this.http.post(this.baseURL + 'login', credentials, {
       headers: this.header
     });
   }
