@@ -1,0 +1,29 @@
+
+
+<div class="file-uploader-container">
+    <div class="file-selector">
+        <p class="file-selector-title">Select File to Upload</p>
+        <form [formGroup]="uploadForm">
+            <input class="file-input" type="file" formControlName="selectedFile" (change)="onFileSelect($event)">
+            <button class="file-action" type="button" (click)="onSubmit()">Upload</button> 
+        </form>
+    </div>
+</div>
+
+<div class="file-list-container">
+    <table class="file-table">
+        <thead>
+            <tr>
+                <th>File Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let file of fileList;">
+                <td>{{file.name}}</td>
+                <td>View</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
