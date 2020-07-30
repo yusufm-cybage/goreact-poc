@@ -1,0 +1,55 @@
+.file-uploader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    .file-selector {
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid gainsboro;
+        background: #ffffff;
+        .file-selector-title {
+            margin: 0;
+        }
+        .file-input {
+            width: 100%;
+            padding: 20px 0;
+        }
+        .file-action {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #4CAF50;
+            background: #4CAF50;
+            cursor: pointer;
+            color: #ffffff;
+            font-weight: bold;
+            outline: none;
+        }
+    }
+}
+
+.file-list-container {
+    width: 75%;
+    margin: 0 auto;
+    padding: 30px 0;
+    @media only screen and (max-width: 767px) {
+        width: 100%;
+      }
+    .file-table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #ffffff;
+      }
+      
+      .file-table td, #file-table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      
+      .file-table th {
+        padding: 10px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+      }
+}
