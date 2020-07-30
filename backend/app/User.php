@@ -38,4 +38,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function mediaPost(){
+        return $this->hasMany('App\MediaPost');
+    }
+
+
 }
