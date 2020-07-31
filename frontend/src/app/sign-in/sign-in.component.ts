@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { UtilityService } from '../services/utility.service';
 import { Router } from '@angular/router';
+import { EmailValidator } from 'src/app/shared/validators/email.validators'
+import { BlankSpaceValidator } from '../shared/validators/blank.validator';
+import { NotificationService } from '../services/notification.service';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -13,11 +16,12 @@ export class SignInComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private utility: UtilityService,
-              private router: Router) { 
+              private router: Router,
+              private notifyService : NotificationService) { 
 
     this.signInForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]]
+      password: ['', [Validators.required, BlankSpaceValidator.validate]],
+      username: ['', [Validators.required, EmailValidator.validate]],
     });
     localStorage.removeItem('token');
     this.utility.loggedIn.emit(false);
@@ -27,30 +31,26 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(value) {
-    console.log(value)
-    this.loginSuccess(value);
-    localStorage.setItem('token', 'token');
-    this.utility.loggedIn.emit(true);
     if(value) {
       let loginData = {
         email: value.username,
         password: value.password
       }
-      // this.authService.login(loginData).subscribe(
-      //   res => this.loginSuccess(res),
-      //   error => this.utility.displayError(error)
-      // );
+      this.authService.login(loginData).subscribe(
+        res => this.loginSuccess(res),
+        error => this.utility.displayError(error)
+      );
     }
   }
 
   loginSuccess(data) {
-    console.log('Login Successfull');
-    this.router.navigate(['home']);
-    localStorage.setItem('token', 'token');
-    this.utility.loggedIn.emit(true);
-
+    if (data.access_token && data.uuid) {
+      localStorage.setItem('token', data.access_token);
+      localStorage.setItem('uuid', data.uuid);
+      localStorage.setItem('name', data.name);
+      this.router.navigate(['home']);
+      this.utility.loggedIn.emit(true);
+      this.notifyService.showSuccess("Login Successfull");
+    }
   }
-
-
-
 }

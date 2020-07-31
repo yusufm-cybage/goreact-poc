@@ -1,16 +1,19 @@
 
 <div class="sign-in-container">
     <div class="sign-in-camp">
-        <div class="sign-in-header upper-case">Sign-In</div>
-        <form FormGroup="signInForm">
+        <div class="sign-in-head sign-in-header upper-case">Sign-In</div>
+        <form [formGroup]="signInForm" class="sign-in-form">
             <div class="sign-in-header">
-                <input type="text" class="sign-in-field" formControlName="username" placeholder="Username"> 
+                <input type="text" class="sign-in-field" formControlName="username" placeholder="Email"> 
             </div>
             <div class="sign-in-header">    
-                <input type="password" class="sign-in-field" formContorlName="password" placeholder="Password">
+                <input type="password" class="sign-in-field" formControlName="password" placeholder="Password"/>
             </div>
             <div class="sign-in-header">    
-                <button type="button" class="sign-in-field submit" (click)="onSubmit(signInForm.value)" >Submit</button>
+                <button type="submit" class="sign-in-field submit" 
+                [ngClass]="{'disable-submit': !signInForm.valid}"
+                [disabled]="!signInForm.valid" 
+                (click)="onSubmit(signInForm.value)">Submit</button>
             </div>
         </form>
     </div>

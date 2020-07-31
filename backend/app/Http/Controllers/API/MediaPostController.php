@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\MediaPost;
 use Validator;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 /**
@@ -90,11 +90,12 @@ class MediaPostController extends Controller
     public function show_mediapost($user_id)
     { 
         $data = array();
-        if ($user_id =='') {
+        if($user_id =='') {
             $data['errors'] = "User uuid is required";
             $responseCode = 401;
         }else{
-            $user = User::findByUUID($user_id);
+
+            $user = User::where('uuid',$user_id)->first();
 
             if(!empty($user)) {
                 $data = $user->mediaPost()->get();
@@ -125,10 +126,10 @@ class MediaPostController extends Controller
     {
         $query = $request['query'];
 
-        $searchResults = MediaPost::where('user_id',Auth::user()->id)
-        ->orWhere('title','LIKE','%'.$query)
+        $searchResults = MediaPost::Where('title','LIKE','%'.$query)
         ->orWhere('tag','LIKE','%'.$query)
         ->orWhere('description','LIKE','%'.$query.'%')
+        ->orWhere('user_id',Auth::user()->id)
         ->get();
 
         return response()->json([

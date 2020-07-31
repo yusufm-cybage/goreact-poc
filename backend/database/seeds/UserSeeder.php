@@ -12,7 +12,16 @@ class UserSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {      
+
+        $admin = new User();
+        $admin->name = 'admin';
+        $admin->email = 'admin@test.com';
+        $admin->password = Hash::make('password');
+        $admin->isAdmin = '1';
+        $admin->save();
+
+
         $user = new User();
         $user->name = 'john doe';
         $user->email = 'johndoe@test.com';

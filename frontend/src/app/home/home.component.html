@@ -4,8 +4,20 @@
     <div class="file-selector">
         <p class="file-selector-title">Select File to Upload</p>
         <form [formGroup]="uploadForm">
+            <div class="file-upload-fields">
+                <input type="text" formControlName="fileTitle" placeholder="File Title">
+            </div>
+            <div  class="file-upload-fields">
+                <input type="text"  formControlName="fileTag" placeholder="File Tag">
+            </div>
+            <div  class="file-upload-fields">
+                <input type="text"  formControlName="fileDescription" placeholder="File Description">
+            </div>
             <input class="file-input" type="file" formControlName="selectedFile" (change)="onFileSelect($event)">
-            <button class="file-action" type="button" (click)="onSubmit()">Upload</button> 
+            <button class="file-action" type="submit"
+            [ngClass]="{'disable-submit': !uploadForm.valid}"
+            [disabled]="!uploadForm.valid" 
+             (click)="onSubmit(uploadForm.value)">Upload</button> 
         </form>
     </div>
 </div>
@@ -15,14 +27,18 @@
         <thead>
             <tr>
                 <th>File Name</th>
-                <th>Action</th>
+                <th>Description</th>
             </tr>
         </thead>
         
         <tbody>
             <tr *ngFor="let file of fileList;">
-                <td>{{file.name}}</td>
-                <td>View</td>
+                <td>{{file.file_name}}</td>
+                <td>{{file.description}}</td>
+            </tr>
+            <tr *ngIf="!fileList.length">
+                <td class="no-data-found-first-td">No Data Found&nbsp;</td>
+                <td class="no-data-found-second-td">&nbsp;</td>
             </tr>
         </tbody>
     </table>
