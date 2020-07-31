@@ -5,10 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\MediaPost;
-use Validator;
 use Illuminate\Support\Facades\Auth;
+use App\MediaPost;
 use App\User;
+use Validator;
 
 /**
  * MediaPostController class
@@ -146,22 +146,19 @@ class MediaPostController extends Controller
     {   
         $query = $request['query'];
         $searchResults =[];
-        $call = '';
-        if(Auth::user()->isAdmin == 1)
-        {
+        
+        if(Auth::user()->isAdmin == 1){
            $searchResults = MediaPost::Where('title','LIKE','%'.$query)
             ->orWhere('tag','LIKE','%'.$query)
             ->orWhere('description','LIKE','%'.$query.'%')        
-            ->get();
-            $call = 'if';
-        }
-        else{
+            ->get();            
+        }else
+        {
             $searchResults = MediaPost::Where('title','LIKE','%'.$query)
                 ->orWhere('tag','LIKE','%'.$query)
                 ->orWhere('description','LIKE','%'.$query.'%')        
                 ->get();
-        }        
-
+        } 
         return response()->json([            
             'message' => 'Success',
             'data' => $searchResults
