@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\MediaPost;
 use Validator;
@@ -18,21 +19,20 @@ class MediaPostController extends Controller
      * Create a media post for a user
      *
      * @param $request array
-     * @return string
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store_mediapost(Request $request)
-    {
-        $errorCode = '';
-        $errorMsg = '';
+    { 
+        $responseCode = '';
+        $responseMsg = '';
         $data = array();
         $filevalidate = 'required|mimes:jpeg,jpg,pdf,mp4';
         if ($request->file('file')!= null){ 
             $file = $request->file('file'); 
-            $imagemimes = ['image/jpeg','image/jpg','application/pdf']; 		
+            $filemimes = ['image/jpeg','image/jpg','application/pdf']; 		
             $videomimes = ['video/mp4']; 
-            
             //Validate Image/Pdf
-            if(in_array($file->getMimeType() ,$imagemimes)) { 			
+            if(in_array($file->getMimeType() ,$filemimes)) { 			
                 $filevalidate = 'required|mimes:jpeg,jpg,pdf|max:2048'; 		
             } 		
             //Validate video 		
@@ -45,17 +45,18 @@ class MediaPostController extends Controller
             'title' =>'required',
             'description' =>'required'
         ]);
-        if ($validator->fails()) {
+        if ($validator->fails()) { 
             $data['errors'] = $validator->messages()->getMessages();
-            $errorCode = 401;
-            $errorMsg='Error, not a valid input format.';
+            $responseCode = 401;
+            $responseMsg='Error, not a valid input format.';
         }else{
+            try{
                 $mediapost = new MediaPost;
-                $fileName  = time().'.'.$request->file->extension();
-                $file_path = public_path('mediafiles');
+                $random = Str::random(10);
+                $fileName  = $random.time().'.'.$request->file->extension();
+                $file_path = storage_path().'\app\mediafiles';
                 $file_type = $request->file->extension();
-                $request->file->move(public_path('mediafiles'), $fileName);
-
+                $request->file('file')->storeAs('mediafiles', $fileName);
                 $mediapost->user_id = Auth::user()->id;
                 $mediapost->file_name = $fileName;
                 $mediapost->file_path = $file_path;
@@ -64,15 +65,18 @@ class MediaPostController extends Controller
                 $mediapost->tag = $request->tag;
                 $mediapost->description = $request->description;
                 $mediapost->save();
-
-                $errorCode = 200;
-                $errorMsg = 'Success';
+            }catch(\Exception $ex){
+                $responseCode = 401;
+                $responseMsg = $ex->getMessage();
+            }
+                $responseCode = 200;
+                $responseMsg = 'Success';
         }
         return response()->json([
-            'code' => $errorCode,
-            'message' => $errorMsg,
+            'code' => $responseCode,
+            'message' => $responseMsg,
             'data' => $data
-         ])->header('Content-Type',"application/json");
+        ],$responseCode)->header('Content-Type',"application/json");
 
         
     }
@@ -84,11 +88,11 @@ class MediaPostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function show_mediapost($user_id)
-    {
+    { 
         $data = array();
         if ($user_id =='') {
             $data['errors'] = "User uuid is required";
-            $errorCode = 401;
+            $responseCode = 401;
         }else{
             $user = User::findByUUID($user_id);
 
@@ -98,19 +102,19 @@ class MediaPostController extends Controller
                     'code' => 200,
                     'message' => 'Success',
                     'data' => $data
-                 ])->header('Content-Type',"application/json");
+                 ],200)->header('Content-Type',"application/json");
             }
             else{
                 return response()->json([
-                    'code' => 200,
-                    'message' => 'Success',
+                    'code' => 401,
+                    'message' => 'User uuid is required',
                     'data' => []
-                 ])->header('Content-Type',"application/json");
+                 ],401)->header('Content-Type',"application/json");
             }
         }
 
     }
-    
+   
     /**
      * Search media posts for a user
      *
