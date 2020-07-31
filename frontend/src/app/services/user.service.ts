@@ -16,21 +16,33 @@ export class UserService {
     return (this.header = new HttpHeaders({
       'Content-Type': 'application/json',
       'X-Requested-With':'XMLHttpRequest',
-      'bearer': localStorage.getItem('token')
+      Authorization :'Bearer ' + localStorage.getItem('token')
     }));
   }
 
   getUserDetails(): Observable<any> {
-    return this.http.get(this.baseURL + 'users/details', {
+    return this.http.get(this.baseURL + 'user', {
       headers: this.createHeader()
     });
   }
 
   uploadFile(data):Observable<any> {
-    return this.http.post(this.baseURL + '', data, { headers: this.createHeader()})
+   let fileheader = new HttpHeaders({
+      "Accept": "application/json",
+      'X-Requested-With':'XMLHttpRequest',
+      Authorization :'Bearer ' + localStorage.getItem('token')
+    });
+    console.log(data)
+    return this.http.post(this.baseURL + 'mediapost', data, { headers: fileheader})
+  }
+
+  getUserUploadedFiles(id): Observable<any> {
+    return this.http.get(this.baseURL + 'mediapost', {
+      headers: this.createHeader()
+    });
   }
 
   logOutUser(): Observable<any> {
-    return this.http.get(this.baseURL + 'user', { headers: this.createHeader()})
+    return this.http.get(this.baseURL + 'logout', { headers: this.createHeader()})
   }
 }

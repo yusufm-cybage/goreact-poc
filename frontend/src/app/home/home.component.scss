@@ -19,12 +19,22 @@
         .file-action {
             padding: 10px 20px;
             border-radius: 5px;
-            border: 1px solid #4CAF50;
-            background: #4CAF50;
+            border: 1px solid #3B99D4;
+            background: #3B99D4;
             cursor: pointer;
             color: #ffffff;
             font-weight: bold;
             outline: none;
+        }
+        .file-upload-fields {
+            padding: 10px 0;
+            display: flex;
+            input {
+                padding: 10px 20px;
+                border-radius: 5px;
+                border: 1px solid gainsboro;
+                width: 100%;
+            }
         }
     }
 }
@@ -40,6 +50,13 @@
         border-collapse: collapse;
         width: 100%;
         background: #ffffff;
+
+        .no-data-found-first-td {
+            border-right: 0;
+          }
+          .no-data-found-second-td {
+            border-left: 0;
+          }
       }
       
       .file-table td, #file-table th {
@@ -50,7 +67,7 @@
       .file-table th {
         padding: 10px;
         text-align: left;
-        background-color: #4CAF50;
+        background-color: #3B99D4;
         color: white;
       }
 }
