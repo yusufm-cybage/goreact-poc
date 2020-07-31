@@ -42,7 +42,7 @@ class AuthController extends Controller
 
         $accessToken = $user->createToken('authToken')->accessToken;
 
-        return response([ 'user' => $user, 'access_token' => $accessToken]);
+        return response([ 'user' => $user, 'access_token' => $accessToken,'message' => 'Register successfully'],201);
     }
 
     /**
@@ -86,8 +86,9 @@ class AuthController extends Controller
              'token_type' => 'Bearer',
                 'expires_at' => Carbon::parse(
                  $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ]);
+            )->toDateTimeString(),
+            'message' => 'Login successfully'
+        ],200);
 
     }
 
@@ -101,7 +102,7 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out'
-        ]);
+        ],200);
     }
 
     /**
