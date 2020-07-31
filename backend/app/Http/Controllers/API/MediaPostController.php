@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\MediaPost;
 use App\User;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+ 
 
 /**
  * MediaPostController class
@@ -30,13 +30,14 @@ class MediaPostController extends Controller
         if ($request->file('file')!= null){ 
             $file = $request->file('file'); 
             $filemimes = ['image/jpeg','image/jpg','application/pdf']; 		
-            $videomimes = ['video/mp4']; 
+            $videomimes = ['video/mp4'];
+            $userfile_mimetype = $file->getMimeType();
             //Validate Image/Pdf
-            if(in_array($file->getMimeType() ,$filemimes)) { 			
+            if(in_array($userfile_mimetype ,$filemimes)) { 			
                 $filevalidate = 'required|mimes:jpeg,jpg,pdf|max:2048'; 		
             } 		
             //Validate video 		
-            if (in_array($file->getMimeType() ,$videomimes)) { 		
+            if (in_array($userfile_mimetype ,$videomimes)) { 		
                 $filevalidate = 'required|mimes:mp4|max:10240'; 		
             } 
         }
@@ -54,7 +55,7 @@ class MediaPostController extends Controller
                 $mediapost = new MediaPost;
                 $random = Str::random(10);
                 $fileName  = $random.time().'.'.$request->file->extension();
-                $file_path = storage_path().'\app\mediafiles';
+                $file_path = '/mediafiles/'.$fileName;
                 $file_type = $request->file->extension();
                 $request->file('file')->storeAs('mediafiles', $fileName);
                 $mediapost->user_id = Auth::user()->id;

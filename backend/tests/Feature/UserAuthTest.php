@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\User;
@@ -10,7 +10,35 @@ use Illuminate\Support\Facades\Hash;
 
 class UserAuthTest extends TestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
+
+    public function testRequiredFieldsForRegistration()
+    {
+        $this->json('POST', 'api/register', ['Accept' => 'application/json'])
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    "name" => ["The name field is required."],
+                    "email" => ["The email field is required."],
+                    "password" => ["The password field is required."],
+                ]
+            ]);
+    }
+
+    public function testMustEnterEmailAndPassword()
+    {
+        $this->json('POST', 'api/login')
+            ->assertStatus(422)
+            ->assertJson([
+                "message" => "The given data was invalid.",
+                "errors" => [
+                    'email' => ["The email field is required."],
+                    'password' => ["The password field is required."],
+                ]
+            ]);
+    }
+
 
     public function testSuccessfulRegistration()
     {   
@@ -21,41 +49,42 @@ class UserAuthTest extends TestCase
             "password_confirmation" => "password"
         ];
 
-        $this->json('POST', 'api/register',$userData, ['Accept' => 'application/json',])
+        $this->json('POST', 'api/register',$userData, ['Accept' => 'application/json'])
             ->assertStatus(201)
             ->assertJsonStructure([
                 "user" => [
-                    'id',
-                    'name',
-                    'email',
-                    'isAdmin',
-                    'created_at',
-                    'updated_at',
-                ],
-                "access_token"                
-            ]);
+                        "name",
+                        "email",
+                        "uuid",
+                        "updated_at",
+                        "created_at",
+                        "id"
+                    ],
+                "access_token",
+                "message"
+            ]);;
     }
 
     public function testSuccessfulLogin()
     {
-         
+        $user = factory(User::class)->create([
+            "name" => "guest",
+            "email" => "guest@test.com",
+            "password" => Hash::make("password"),
+        ]);
+
         $loginData = ['email' => 'guest@test.com', 'password' => 'password'];
 
         $this->json('POST', 'api/login', $loginData, ['Accept' => 'application/json'])
             ->assertStatus(200)
             ->assertJsonStructure([
-               "user" => [
-                   'id',
-                   'name',
-                   'email',
-                   'isAdmin',
-                   'email_verified_at',
-                   'created_at',
-                   'updated_at',
-               ],
+                "name",
+                "uuid",
                 "access_token",
+                "token_type",
+                "expires_at",
                 "message"
-            ]);
+            ]);;
 
         $this->assertAuthenticated();
     }
@@ -69,19 +98,9 @@ class UserAuthTest extends TestCase
         ];
 
         $this->json('POST', 'api/register',$userData, ['Accept' => 'application/json',])
-            ->assertStatus(422)
-            ->assertJsonStructure([
-                "user" => [
-                    'id',
-                    'name',
-                    'email',
-                    'isAdmin',
-                    'created_at',
-                    'updated_at',
-                ],
-                "access_token"                
-            ]);
+            ->assertStatus(422);
     }
 
+    
     
 }
