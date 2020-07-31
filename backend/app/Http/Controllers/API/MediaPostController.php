@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\MediaPost;
 use Validator;
+use Auth;
+use App\User;
 
+/**
+ * MediaPostController class
+ */
 class MediaPostController extends Controller
 {
     /**
@@ -19,53 +24,57 @@ class MediaPostController extends Controller
     {
         $errorCode = '';
         $errorMsg = '';
-        $validator = Validator::make($request->all(),[
-            'file' => 'required|mimes:jpeg,jpg,pdf,mp4',
-            'title' =>'required',
-            'description' =>'required',
-        ]);
-        if ($request->file('file')!=null){
-            if($request->file->extension()=='mp4'){
-                $validator = Validator::make($request->all(),[
-                    'file' => 'required|mimes:mp4|max:10240',
-                ]); 
-            }
-            if($request->file->extension()=='jpeg,jpg,pdf'){
-                $validator = Validator::make($request->all(),[
-                    'file' => 'required|mimes:jpeg,pdf|max:1024',
-                ]); 
-            }
+        $data = array();
+        $filevalidate = 'required|mimes:jpeg,jpg,pdf,mp4';
+        if ($request->file('file')!= null){ 
+            $file = $request->file('file'); 
+            $imagemimes = ['image/jpeg','image/jpg','application/pdf']; 		
+            $videomimes = ['video/mp4']; 
+            
+            //Validate Image/Pdf
+            if(in_array($file->getMimeType() ,$imagemimes)) { 			
+                $filevalidate = 'required|mimes:jpeg,jpg,pdf|max:2048'; 		
+            } 		
+            //Validate video 		
+            if (in_array($file->getMimeType() ,$videomimes)) { 		
+                $filevalidate = 'required|mimes:mp4|max:10240'; 		
+            } 
         }
+        $validator = Validator::make($request->all(),[
+            'file' => $filevalidate,
+            'title' =>'required',
+            'description' =>'required'
+        ]);
         if ($validator->fails()) {
             $data['errors'] = $validator->messages()->getMessages();
             $errorCode = 401;
             $errorMsg='Error, not a valid input format.';
-        }else{ 
+        }else{
                 $mediapost = new MediaPost;
-                $fileName  = time().'.'.$request->file->extension();  
+                $fileName  = time().'.'.$request->file->extension();
                 $file_path = public_path('mediafiles');
                 $file_type = $request->file->extension();
                 $request->file->move(public_path('mediafiles'), $fileName);
-                
-                $mediapost->user_id = 1;
+
+                $mediapost->user_id = Auth::user()->id;
                 $mediapost->file_name = $fileName;
                 $mediapost->file_path = $file_path;
                 $mediapost->file_type = $file_type;
                 $mediapost->title = $request->title;
                 $mediapost->tag = $request->tag;
-                $mediapost->description = $request->description; 
+                $mediapost->description = $request->description;
                 $mediapost->save();
-                
+
                 $errorCode = 200;
                 $errorMsg = 'Success';
-       
-                
         }
         return response()->json([
             'code' => $errorCode,
-            'message' => $errorMsg
-         ])->header('Content-Type',"application/json"); 
-                
+            'message' => $errorMsg,
+            'data' => $data
+         ])->header('Content-Type',"application/json");
+
+        
     }
     
     /**
@@ -78,28 +87,50 @@ class MediaPostController extends Controller
     {
         $data = array();
         if ($user_id =='') {
-            $data['errors'] = "User id is required";
+            $data['errors'] = "User uuid is required";
             $errorCode = 401;
-        }else{ 
-            $mediapost = MediaPost::where('user_id', '=', $user_id)->get();
-            if(!empty($mediapost)) {
-                foreach ($mediapost as $media){
-                    $tmpArr['file_name'] = $media->file_name;
-                    $tmpArr['file_path'] = $media->file_path;
-                    $tmpArr['file_type'] = $media->file_type;
-                    $tmpArr['title'] = $media->title;
-                    $tmpArr['tag'] = $media->tag;
-                    $tmpArr['description'] = $media->description;
-                    array_push($data, $tmpArr);
-                }
+        }else{
+            $user = User::findByUUID($user_id);
+
+            if(!empty($user)) {
+                $data = $user->mediaPost()->get();
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Success',
+                    'data' => $data
+                 ])->header('Content-Type',"application/json");
             }
-         return response()->json([
-           'code' => 200,
-           'message' => 'Success',
-           'data' => $data
-        ])->header('Content-Type',"application/json");
+            else{
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Success',
+                    'data' => []
+                 ])->header('Content-Type',"application/json");
+            }
         }
-        
+
     }
     
+    /**
+     * Search media posts for a user
+     *
+     * @param $request array
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function search(Request $request)
+    {
+        $query = $request['query'];
+
+        $searchResults = MediaPost::where('user_id',Auth::user()->id)
+        ->orWhere('title','LIKE','%'.$query)
+        ->orWhere('tag','LIKE','%'.$query)
+        ->orWhere('description','LIKE','%'.$query.'%')
+        ->get();
+
+        return response()->json([
+            'message' => 'Success',
+            'data' => $searchResults
+            ]);
+    }
+
 }

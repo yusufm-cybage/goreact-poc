@@ -29,4 +29,4 @@ use App\Http\Controllers\API\MediaPostController;
 
     Route::middleware('auth:api')->get('/logout', 'API\AuthController@logout');
     Route::middleware('auth:api')->get('/user', 'API\AuthController@user');
-    
+    Route::middleware('auth:api')->post('/search', 'API\MediaPostController@search');
