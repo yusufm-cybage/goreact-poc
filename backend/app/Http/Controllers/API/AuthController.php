@@ -6,17 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use App\User;
-use Illuminate\Support\Facades\Validator;
-
 
 /**
  * AuthController class
  */
 class AuthController extends Controller
 {   
-    
     /**
      * Create user
      *
@@ -25,8 +23,7 @@ class AuthController extends Controller
      * @param  [string] password
      * @param  [string] password_confirmation
      * @return  array
-    */
-    
+    */    
     public function register(Request $request)
     {
 
@@ -35,14 +32,14 @@ class AuthController extends Controller
             'email' => 'email|required|unique:users',
             'password' => 'required|confirmed'
         ]);
-
         $validatedData['password'] = Hash::make($request->password);
-
         $user = User::create($validatedData);
-
         $accessToken = $user->createToken('authToken')->accessToken;
-
-        return response([ 'user' => $user, 'access_token' => $accessToken,'message' => 'Register successfully'],201);
+        return response([ 
+            'user' => $user,
+            'access_token' => $accessToken,
+            'message' => 'Register successfully'
+        ],201);
     }
 
     /**
@@ -56,7 +53,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -65,29 +61,25 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
-
+        return response()->json([
+            'message' => 'Unauthorized'
+        ], 401);
         $user = $request->user();
         $tokenResult = $user->createToken('authToken');
-
         $token = $tokenResult->token;
         if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
-            $token->save();
-
-            return response()->json([
-             'name' => $user->name,
-             'uuid' => $user->uuid,
-             'access_token' => $tokenResult->accessToken,
-             'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                 $tokenResult->token->expires_at
+        $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->save();
+        return response()->json([
+            'name' => $user->name,
+            'uuid' => $user->uuid,
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
             )->toDateTimeString(),
             'message' => 'Login successfully'
         ],200);
-
     }
 
     /**

@@ -77,12 +77,32 @@ class MediaPostController extends Controller
             'message' => $responseMsg,
             'data' => $data
         ],$responseCode)->header('Content-Type',"application/json");
-
-        
     }
     
     /**
-     * Fetch media posts for a user
+     * Fetch media posts for a user  
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function mediaAll()
+    {   
+        $errorMsg = '';
+        $data = array();
+
+        if(Auth::user()->isAdmin == 1)
+        {
+            $data = MediaPost::all();
+        }
+        else{
+            $data = MediaPost::where('user_id',Auth::user()->id)->get();
+        }
+        return response()->json([
+            'code' => 200,
+            'message' => 'success',
+            'data' => $data
+        ],200)->header('Content-Type',"application/json");
+    }
+    /**
+     * Fetch media posts for a user based on uuid
      *
      * @param $user_id
      * @return \Illuminate\Http\JsonResponse
@@ -123,16 +143,26 @@ class MediaPostController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function search(Request $request)
-    {
+    {   
         $query = $request['query'];
+        $searchResults =[];
+        $call = '';
+        if(Auth::user()->isAdmin == 1)
+        {
+           $searchResults = MediaPost::Where('title','LIKE','%'.$query)
+            ->orWhere('tag','LIKE','%'.$query)
+            ->orWhere('description','LIKE','%'.$query.'%')        
+            ->get();
+            $call = 'if';
+        }
+        else{
+            $searchResults = MediaPost::Where('title','LIKE','%'.$query)
+                ->orWhere('tag','LIKE','%'.$query)
+                ->orWhere('description','LIKE','%'.$query.'%')        
+                ->get();
+        }        
 
-        $searchResults = MediaPost::Where('title','LIKE','%'.$query)
-        ->orWhere('tag','LIKE','%'.$query)
-        ->orWhere('description','LIKE','%'.$query.'%')
-        ->orWhere('user_id',Auth::user()->id)
-        ->get();
-
-        return response()->json([
+        return response()->json([            
             'message' => 'Success',
             'data' => $searchResults
             ]);
