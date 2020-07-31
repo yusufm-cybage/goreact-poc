@@ -51,9 +51,7 @@ class AuthController extends Controller
      * @param  [string] email
      * @param  [string] password
      * @param  [boolean] remember_me
-     * @return [string] access_token
-     * @return [string] token_type
-     * @return [string] expires_at
+     * @return [json] user object
     */
 
     public function login(Request $request)

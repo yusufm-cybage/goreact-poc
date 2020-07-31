@@ -22,6 +22,7 @@ class MediaPostController extends Controller
      */
     public function store_mediapost(Request $request)
     {
+        //dd($request->file('file'));
         $errorCode = '';
         $errorMsg = '';
         $data = array();
@@ -122,10 +123,10 @@ class MediaPostController extends Controller
     {
         $query = $request['query'];
 
-        $searchResults = MediaPost::where('user_id',Auth::user()->id)
-        ->orWhere('title','LIKE','%'.$query)
+        $searchResults = MediaPost::Where('title','LIKE','%'.$query)
         ->orWhere('tag','LIKE','%'.$query)
         ->orWhere('description','LIKE','%'.$query.'%')
+        ->orWhere('user_id',Auth::user()->id)
         ->get();
 
         return response()->json([
