@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\MediaPost;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\MediaPost;
 use Validator;
-use Illuminate\Support\Facades\Auth;
-use App\User;
 
 /**
  * MediaPostController class
@@ -30,13 +30,14 @@ class MediaPostController extends Controller
         if ($request->file('file')!= null){ 
             $file = $request->file('file'); 
             $filemimes = ['image/jpeg','image/jpg','application/pdf']; 		
-            $videomimes = ['video/mp4']; 
+            $videomimes = ['video/mp4'];
+            $userfile_mimetype = $file->getMimeType();
             //Validate Image/Pdf
-            if(in_array($file->getMimeType() ,$filemimes)) { 			
+            if(in_array($userfile_mimetype ,$filemimes)) { 			
                 $filevalidate = 'required|mimes:jpeg,jpg,pdf|max:2048'; 		
             } 		
             //Validate video 		
-            if (in_array($file->getMimeType() ,$videomimes)) { 		
+            if (in_array($userfile_mimetype ,$videomimes)) { 		
                 $filevalidate = 'required|mimes:mp4|max:10240'; 		
             } 
         }
