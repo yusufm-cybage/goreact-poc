@@ -38,11 +38,21 @@ POST method with headers require
 
 Content-Type:application/json
 X-Requested-With:XMLHttpRequest
-Bearer tokenvalue
-
+ 
 http://localhost:8000/api/login
 
 email, password
+
+raw user data
+
+username : johndoe@test.com
+password : password
+
+username : user@test.com
+password : password
+
+username : guest@test.com
+password : password
 
 ```
 

@@ -10,8 +10,23 @@ use Carbon\Carbon;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 
+
+/**
+ * AuthController class
+ */
 class AuthController extends Controller
-{
+{   
+    
+    /**
+     * Create user
+     *
+     * @param  [string] name
+     * @param  [string] email
+     * @param  [string] password
+     * @param  [string] password_confirmation
+     * @return  array
+    */
+    
     public function register(Request $request)
     {
 
@@ -29,6 +44,17 @@ class AuthController extends Controller
 
         return response([ 'user' => $user, 'access_token' => $accessToken]);
     }
+
+    /**
+     * Login user and create token
+     *
+     * @param  [string] email
+     * @param  [string] password
+     * @param  [boolean] remember_me
+     * @return [string] access_token
+     * @return [string] token_type
+     * @return [string] expires_at
+    */
 
     public function login(Request $request)
     {
