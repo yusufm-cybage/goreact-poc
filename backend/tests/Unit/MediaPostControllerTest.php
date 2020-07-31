@@ -56,7 +56,7 @@ class MediaPostControllerTest extends TestCase
      */
     public function testShowMediaPostSuccess()
     {
-        $uuid = "a7d0673d-a9ef-449f-bbf8-db8dadc46207";//Auth::user()->uuid;
+        $uuid = Auth::user()->uuid;
         
         $this->json('GET', 'api/showmediapost/'.$uuid,['Accept' => 'application/json'])
         ->assertStatus(200);
