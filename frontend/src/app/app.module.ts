@@ -4,15 +4,20 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { from } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
+import { EmailValidator } from './shared/validators/email.validators';
+import { SignInComponent } from './sign-in/sign-in.component';
+import { BlankSpaceValidator } from './shared/validators/blank.validator';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
@@ -20,9 +25,11 @@ import { HomeComponent } from './home/home.component';
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
-    CommonModule
+    CommonModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule 
   ],
-  providers: [],
+  providers: [EmailValidator, BlankSpaceValidator],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
