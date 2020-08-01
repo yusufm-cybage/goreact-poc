@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { HomeComponent } from './home/home.component';
 import { RouteGuardService } from './services/route-guard.service';
 
 
@@ -13,11 +11,11 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
-    component: SignInComponent
+    loadChildren: () => import('./sign-in/sign-in.module').then(m => m.SignInModule)
   },
   {
     path: 'home',
-    component: HomeComponent,
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     canActivate:[RouteGuardService]
   },
 ];

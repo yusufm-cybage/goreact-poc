@@ -6,9 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
 import { EmailValidator } from './shared/validators/email.validators';
-import { SignInComponent } from './sign-in/sign-in.component';
 import { BlankSpaceValidator } from './shared/validators/blank.validator';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -17,9 +15,7 @@ import { SpinnerModule } from './shared/spinner/spinner.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    SignInComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
