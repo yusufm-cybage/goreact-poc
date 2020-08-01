@@ -32,7 +32,6 @@ export class UserService {
       'X-Requested-With':'XMLHttpRequest',
       Authorization :'Bearer ' + localStorage.getItem('token')
     });
-    console.log(data)
     return this.http.post(this.baseURL + 'mediapost', data, { headers: fileheader})
   }
 
