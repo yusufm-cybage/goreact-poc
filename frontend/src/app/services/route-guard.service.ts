@@ -16,3 +16,19 @@ export class RouteGuardService implements CanActivate {
     }
   }
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdminGuardService implements CanActivate {
+
+  constructor(private router: Router) { }
+
+  canActivate() {
+    if (localStorage.getItem('token') && localStorage.getItem('isAdmin')) {
+      return true;
+    } else {
+      this.router.navigate(['home']);
+    }
+  }
+}

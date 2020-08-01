@@ -37,9 +37,13 @@ export class UserService {
   }
 
   getUserUploadedFiles(id): Observable<any> {
-    return this.http.get(this.baseURL + 'mediapost', {
+    return this.http.get(this.baseURL + 'showmediapost/' + id, {
       headers: this.createHeader()
     });
+  }
+
+  getAllMediaPosts(): Observable<any> {
+    return this.http.get(this.baseURL + 'mediapost', { headers: this.createHeader()})
   }
 
   logOutUser(): Observable<any> {

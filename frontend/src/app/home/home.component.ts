@@ -4,7 +4,7 @@ import { UserService } from '../services/user.service';
 import { UtilityService } from '../services/utility.service';
 import { BlankSpaceValidator } from '../shared/validators/blank.validator';
 import { NotificationService } from '../services/notification.service';
-
+import { environment } from '../../environments/environment'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   uploadForm: FormGroup; 
   fileList: any = [];
   fileValue: any;
+  baseUrl: any = '';
   constructor(private formBuilder: FormBuilder, 
     private userService: UserService,
     private utility: UtilityService, 
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
       fileTag: ['', [Validators.required, BlankSpaceValidator.validate]],
       fileDescription: ['', [Validators.required, BlankSpaceValidator.validate]]
     });
+    this.baseUrl = environment.fileBaseURL;
     this.getUsersFileList();
    }
 
@@ -43,6 +45,7 @@ export class HomeComponent implements OnInit {
       this.fileList = [];
       res.data.forEach(item => {
         item.isOpen = false;
+        item.filePath = this.baseUrl + item.file_name;
         this.fileList.push(item);
       });
       this.utility.showSpinner.emit(false);

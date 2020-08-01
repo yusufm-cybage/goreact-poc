@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
       password: ['', [Validators.required, BlankSpaceValidator.validate]],
       username: ['', [Validators.required, EmailValidator.validate]],
     });
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.utility.loggedIn.emit(false);
   }
   
@@ -49,6 +49,9 @@ export class SignInComponent implements OnInit {
       localStorage.setItem('token', data.access_token);
       localStorage.setItem('uuid', data.uuid);
       localStorage.setItem('name', data.name);
+      if(data.isAdmin == '1') {
+        localStorage.setItem('isAdmin', '1');
+      }
       this.router.navigate(['home']);
       this.utility.loggedIn.emit(true);
       this.notifyService.showSuccess("Login Successfull");

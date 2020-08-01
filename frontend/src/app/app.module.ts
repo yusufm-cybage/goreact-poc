@@ -12,6 +12,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SpinnerModule } from './shared/spinner/spinner.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SpinnerModule } from './shared/spinner/spinner.module';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
-    SpinnerModule
+    SpinnerModule,
+    MatMenuModule
   ],
   providers: [EmailValidator, BlankSpaceValidator],
   bootstrap: [AppComponent]

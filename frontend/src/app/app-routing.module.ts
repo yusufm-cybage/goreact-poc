@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RouteGuardService } from './services/route-guard.service';
+import { RouteGuardService, AdminGuardService } from './services/route-guard.service';
 
 
 const routes: Routes = [
@@ -18,6 +18,11 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
     canActivate:[RouteGuardService]
   },
+  {
+    path: 'users-upload',
+    loadChildren: () => import('./users-upload/users-upload.module').then(m => m.UsersUploadModule),
+    canActivate: [RouteGuardService, AdminGuardService]
+  }
 ];
 
 @NgModule({

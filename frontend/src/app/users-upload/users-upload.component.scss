@@ -1,0 +1,76 @@
+
+.users-upload-container {
+    padding: 20px;
+    .file-list-container {
+            width: 75%;
+            margin: 0 auto;
+            padding: 30px 0;
+            @media only screen and (max-width: 767px) {
+                width: 100%;
+                overflow-x: auto;
+            }
+            .users-uploade-title {
+                padding: 20px 0;
+            }
+            .file-table {
+                border-collapse: collapse;
+                width: 100%;
+                background: #ffffff;
+
+                .no-data-found-first-td {
+                    border-right: 0;
+                }
+                .no-data-found-second-td {
+                    border-left: 0;
+                }
+            }
+            
+            .file-table td, #file-table th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+            
+            .file-table th {
+                padding: 10px;
+                text-align: left;
+                background-color: #3B99D4;
+                color: white;
+            }
+
+            .media-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+
+                img {
+                    width: 50%;
+                    max-width: 100%;
+                }
+                video {
+                    @media only screen and (max-width: 767px) {
+                        width: auto;
+                        height: auto;
+                    }
+                }
+            }
+
+            .file-title {
+                width: 70%;
+                @media only screen and (max-width: 767px) {
+                    width: auto;
+                }
+                span, a {
+                    cursor: pointer;
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }
+            .uploaded-by {
+                width: 30%;
+                @media only screen and (max-width: 767px) {
+                    width: auto;
+                }
+            }
+    }
+}
