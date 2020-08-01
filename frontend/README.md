@@ -8,7 +8,7 @@ Run `npm install -g @angular/cli` command
 
 ## Getting started
 
-Change directory to Frontend folder and install dependacies using `npm install` command
+Change directory to Frontend folder and install dependencies using `npm install` command
 
 ## Development server
 
