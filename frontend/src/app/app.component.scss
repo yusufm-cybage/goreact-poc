@@ -1,7 +1,10 @@
 .apply-padding {
     padding-top: 70px;
 }
-
+.welcome {
+    cursor: pointer;
+    outline: 0;
+}
 .list-menu {
     display: flex;
     .ham-burger {
@@ -25,6 +28,7 @@
     .user-menu {
         display: block;
         cursor: pointer;
+        outline: 0;
         @media only screen and (max-width: 767px) {
             display:  none;
         }

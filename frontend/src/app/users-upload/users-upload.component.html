@@ -2,7 +2,7 @@
 <div class="users-upload-container">
     <div class="file-list-container">
         <div class="users-uploade-title">
-            User Uploaded Files
+            Users Uploaded Files
         </div>
         <table class="file-table">
             <thead>
@@ -17,7 +17,7 @@
                     <tr>
                         <td class="file-title" *ngIf="file?.file_type != 'pdf'"><span (click)="openFile(i)">{{file?.file_name}}</span></td>
                         <td class="file-title" *ngIf="file?.file_type == 'pdf'"><a href="{{file?.filePath}}" target="_blank">{{file?.file_name}}</a></td>
-                        <td class="uploaded-by">{{file?.username}}</td>
+                        <td class="uploaded-by">{{file?.user_id}}</td>
                     </tr>
                     <tr *ngIf="file.isOpen">
                         <div class="media-container" *ngIf="file?.file_type == 'jpeg' || file?.file_type == 'jpg'">

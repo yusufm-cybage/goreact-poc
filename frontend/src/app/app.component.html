@@ -4,7 +4,7 @@
 <div *ngIf="isLoggedIn" >
     <div class="toolbar" role="banner">
         <div>
-            <span>Welcome to GoReact</span>
+            <span class="welcome" [routerLink]="['home']">Welcome to GoReact</span>
         </div>
         <div class="list-menu">
             <span class="user-menu" *ngIf="isAdmin" [routerLink]="['users-upload']">Users Uploaded Files</span>
