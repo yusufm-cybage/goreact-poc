@@ -31,16 +31,18 @@ export class AppComponent {
   }
 
   logOut() {
+    this.utility.showSpinner.emit(true);
     this.userService.logOutUser().subscribe(
       res => this.logOutSuccess(res),
       error => this.utility.displayError(error)
     );
   }
 
-  logOutSuccess(data) {
+  private logOutSuccess(data) {
     this.notifyService.showSuccess("Logout Successfull");
     this.utility.loggedIn.emit(false);
     this.isLoggedIn = false;
+    this.utility.showSpinner.emit(false)
     this.router.navigate(['sign-in']);
   }
 }

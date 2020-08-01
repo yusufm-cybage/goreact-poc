@@ -12,6 +12,8 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { BlankSpaceValidator } from './shared/validators/blank.validator';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SpinnerModule } from './shared/spinner/spinner.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     CommonModule,
     ToastrModule.forRoot(),
-    BrowserAnimationsModule 
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
+    SpinnerModule
   ],
   providers: [EmailValidator, BlankSpaceValidator],
   bootstrap: [AppComponent]

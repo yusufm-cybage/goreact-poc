@@ -30,17 +30,24 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getUsersFileList() {
+  private getUsersFileList() {
+    this.utility.showSpinner.emit(true);
     this.userService.getUserUploadedFiles(localStorage.getItem('uuid')).subscribe(
       res => this.getUsersFileListSuccess(res),
       error => this.utility.displayError(error)
     );
   }
 
-  getUsersFileListSuccess(res) {
-    console.log(res)
+  private getUsersFileListSuccess(res) {
     if(res && res.data && res.data.length) {
-      this.fileList = res.data
+      this.fileList = [];
+      res.data.forEach(item => {
+        item.isOpen = false;
+        this.fileList.push(item);
+      });
+      this.utility.showSpinner.emit(false);
+    } else {
+      this.utility.showSpinner.emit(false);
     }
   }
 
@@ -56,21 +63,29 @@ export class HomeComponent implements OnInit {
     formData.append('title', value.fileTitle);
     formData.append('tag', value.fileTag);
     formData.append('description', value.fileDescription);
-
+    this.utility.showSpinner.emit(true);
     this.userService.uploadFile(formData).subscribe(
       res => this.fileUploadSuccess(res),
       error => this.utility.displayError(error)
     );
   }
 
-  fileUploadSuccess(data) {
+  private fileUploadSuccess(data) {
     if(data && data.code == 200) {
       this.notyfy.showSuccess('File Uploaded Successfully');
       this.uploadForm.reset();
       this.fileValue = '';
       this.getUsersFileList();
+    } else {
+      this.utility.showSpinner.emit(false)
     }
   }
 
+  openFile(index) {
+    this.fileList[index].isOpen = !this.fileList[index].isOpen;
+  }
 
+  trackByFn(index) {
+    return index;
+  }
 }
