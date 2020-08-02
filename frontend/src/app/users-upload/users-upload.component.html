@@ -1,8 +1,23 @@
 
 <div class="users-upload-container">
     <div class="file-list-container">
-        <div class="users-uploade-title">
+        <div class="users-upload-title">
             Users Uploaded Files
+
+            <div class="search-file">
+                <div class="search-main">
+                    <span class="search-file-container"> 
+                        <input type="text" placeholder="Search File" [(ngModel)]="searchQuery" (keyup.enter)="searchFile()">
+                        <span class="material-icons search-action" (click)="searchFile()">
+                            search
+                        </span>
+                        <span *ngIf="searchQuery" class="material-icons clear-search" (click)="resetSearch()">
+                            cancel
+                        </span>
+                    </span>
+                    
+                </div>
+            </div>
         </div>
         <table class="file-table">
             <thead>
@@ -17,7 +32,7 @@
                     <tr>
                         <td class="file-title" *ngIf="file?.file_type != 'pdf'"><span (click)="openFile(i)">{{file?.file_name}}</span></td>
                         <td class="file-title" *ngIf="file?.file_type == 'pdf'"><a href="{{file?.filePath}}" target="_blank">{{file?.file_name}}</a></td>
-                        <td class="uploaded-by">{{file?.user_id}}</td>
+                        <td class="uploaded-by">{{file?.user?.name}}</td>
                     </tr>
                     <tr *ngIf="file.isOpen">
                         <div class="media-container" *ngIf="file?.file_type == 'jpeg' || file?.file_type == 'jpg'">

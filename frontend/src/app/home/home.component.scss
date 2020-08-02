@@ -99,5 +99,35 @@
                 color: inherit;
             }
         }
+
+        .search-file {
+            padding: 10px;
+            text-align: right;
+            .search-main {
+                position: relative;
+            }
+            .search-file-container {
+                position: relative;
+                margin: 0 25px;
+                input {
+                    padding: 10px;
+                    border: 1px solid gainsboro;
+                    border-radius: 5px;
+                }
+                .search-action {
+                    position: absolute;
+                    right: 6px;
+                    top: 0px;
+                    cursor: pointer;
+                }
+               
+            }
+            .clear-search {
+                top: 0px;
+                position: absolute;
+                cursor: pointer;
+                margin: 0 0 0 5px;
+            }
+        }
     }
 }

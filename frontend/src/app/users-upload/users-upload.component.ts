@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
 export class UsersUploadComponent implements OnInit {
   fileList: any = [];
   baseUrl: any = '';
+  searchQuery: any = '';
+  isSearch: boolean = false;
   constructor(private userService: UserService, private utility: UtilityService) { 
     this.baseUrl = environment.fileBaseURL;
     this.getAllMediaPosts();
@@ -45,5 +47,28 @@ export class UsersUploadComponent implements OnInit {
 
   trackByFn(index) {
     return index;
+  }
+
+  searchFile() {
+    if(this.searchQuery) {
+      this.isSearch = true;
+      this.utility.showSpinner.emit(true);
+      let searchPayload = {
+        query: this.searchQuery
+      }
+      this.userService.searchFile(searchPayload).subscribe(
+        res => this.getAllMediaPostsSuccess(res),
+        error => this.utility.displayError(error)
+      )
+    }
+  }
+
+  resetSearch() {
+    if (this.searchQuery && this.isSearch) {
+      this.searchQuery = '';
+      this.getAllMediaPosts();
+    } else {
+      this.searchQuery = '';
+    }
   }
 }

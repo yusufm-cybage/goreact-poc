@@ -23,6 +23,19 @@
     </div>
 
     <div class="file-list-container">
+        <div class="search-file">
+            <div class="search-main">
+                <span class="search-file-container"> 
+                    <input type="text" placeholder="Search File" [(ngModel)]="searchQuery" (keyup.enter)="searchFile()">
+                    <span class="material-icons search-action" (click)="searchFile()">
+                        search
+                    </span>
+                    <span *ngIf="searchQuery" class="material-icons clear-search" (click)="resetSearch()">
+                        cancel
+                    </span>
+                </span>
+            </div>
+        </div>
         <table class="file-table">
             <thead>
                 <tr>
