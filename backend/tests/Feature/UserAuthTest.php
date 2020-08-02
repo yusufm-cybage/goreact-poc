@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Hash;
 class UserAuthTest extends TestCase
 {
    // use RefreshDatabase;
-
+    /**
+     * test required fields for registration.
+     *
+     * @return array
+     */
     public function testRequiredFieldsForRegistration()
     {
         $this->json('POST', 'api/register', ['Accept' => 'application/json'])
@@ -25,7 +29,11 @@ class UserAuthTest extends TestCase
                 ]
             ]);
     }
-
+    /**
+     * test must enter email and password.
+     *
+     * @return array
+     */
     public function testMustEnterEmailAndPassword()
     {
         $this->json('POST', 'api/login')
@@ -38,8 +46,11 @@ class UserAuthTest extends TestCase
                 ]
             ]);
     }
-
-
+    /**
+     * test successful registration.
+     *
+     * @return array
+     */
     public function testSuccessfulRegistration()
     {   
         $userData = [
@@ -64,6 +75,11 @@ class UserAuthTest extends TestCase
                 "message"
             ]);;
     }
+    /**
+     * test successful login
+     *
+     * @return array
+     */
 
     public function testSuccessfulLogin()
     {
@@ -89,7 +105,11 @@ class UserAuthTest extends TestCase
 
         $this->assertAuthenticated();
     }
-
+    /**
+     * test missing input in registration
+     *
+     * @return void
+     */
     public function testMissingInputInRegistration()
     {   
         $userData = [

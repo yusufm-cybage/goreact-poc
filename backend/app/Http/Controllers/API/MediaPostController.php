@@ -95,9 +95,14 @@ class MediaPostController extends Controller
         $errorMsg = '';
         $data = array();
         if(Auth::user()->isAdmin == 1){
-            $data = MediaPost::with('user:uuid,name')->get();
+            $data = MediaPost::with('user:uuid,name')
+            ->orderBy('created_at')
+            ->get();
         }else{
-            $data = MediaPost::with('user:uuid,name')->where('user_id', Auth::user()->id)->get();
+            $data = MediaPost::with('user:uuid,name')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('created_at')
+            ->get();
         }
         return response()->json([
             'code' => 200,
@@ -147,7 +152,7 @@ class MediaPostController extends Controller
         } 
         return response()->json([            
             'message' => 'Success',            
-            'data' => count($searchResults) > 0 ? $searchResults : 'No search result found'
+            'data' => $searchResults
             ],200);
     }
 }

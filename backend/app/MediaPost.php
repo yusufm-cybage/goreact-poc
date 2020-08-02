@@ -58,12 +58,14 @@ class MediaPost extends Model
      */
     public static function search($id, $query)
     {   
-       return MediaPost::where(function($q) use($query) {
+       return MediaPost::with('user:uuid,name')->where(function($q) use($query) {
                                 $q->where('title', 'LIKE', "%$query%")
                                 ->orWhere('tag', 'LIKE', "%$query%")
                                 ->orWhere('description', 'LIKE', "%$query%");
 
-                            })->where('user_id','=',$id)->get();
+                            })->where('user_id','=',$id)
+                               ->orderBy('created_at')
+                               ->get();
     }
     /**
      * search function for admin user
@@ -72,10 +74,10 @@ class MediaPost extends Model
      */
     public static function searchByAdmin($query)
     {   
-       return MediaPost::where(function($q) use($query) {
-                                $q->where('title', 'LIKE', "%$query%")
-                                ->orWhere('tag', 'LIKE', "%$query%")
-                                ->orWhere('description', 'LIKE', "%$query%");
-                            })->get();
+       return MediaPost::with('user:uuid,name')
+                        ->where('title', 'LIKE', "%$query%")
+                        ->orWhere('tag', 'LIKE', "%$query%")
+                        ->orWhere('description', 'LIKE', "%$query%")
+                        ->get();
     }
 }
