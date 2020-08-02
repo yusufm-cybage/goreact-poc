@@ -43,8 +43,8 @@ export class HomeComponent implements OnInit {
   }
 
   private getUsersFileListSuccess(res) {
+    this.fileList = [];
     if(res && res.data && res.data.length) {
-      this.fileList = [];
       res.data.forEach(item => {
         item.isOpen = false;
         item.filePath = this.baseUrl + item.file_name;
