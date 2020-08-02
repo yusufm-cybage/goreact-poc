@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { EmailValidator } from 'src/app/shared/validators/email.validators'
 import { BlankSpaceValidator } from '../shared/validators/blank.validator';
 import { NotificationService } from '../services/notification.service';
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -13,6 +14,7 @@ import { NotificationService } from '../services/notification.service';
 })
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
+  guestCredentials: any = {};
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private utility: UtilityService,
@@ -25,6 +27,10 @@ export class SignInComponent implements OnInit {
     });
     localStorage.clear();
     this.utility.loggedIn.emit(false);
+    this.guestCredentials = {
+      username: environment.guestUserName,
+      password: environment.guestPassword
+    }
   }
   
   ngOnInit(): void {
@@ -61,10 +67,6 @@ export class SignInComponent implements OnInit {
   }
 
   signInAsGuest() {
-    let value = {
-      username: 'nilesh@test.com',
-      password: 'password'
-    };
-    this.onSubmit(value);
+    this.onSubmit(this.guestCredentials);
   }
 }

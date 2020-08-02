@@ -95,11 +95,13 @@ export class HomeComponent implements OnInit {
   }
 
   searchFile() {
-    console.log('called', this.searchQuery)
     if(this.searchQuery) {
       this.isSearch = true;
       this.utility.showSpinner.emit(true);
-      this.userService.searchFile(this.searchQuery).subscribe(
+      let searchPayload = {
+        query: this.searchQuery
+      }
+      this.userService.searchFile(searchPayload).subscribe(
         res => this.getUsersFileListSuccess(res),
         error => this.utility.displayError(error)
       )

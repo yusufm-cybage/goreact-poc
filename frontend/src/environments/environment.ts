@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: 'http://2e68bf4badef.ngrok.io/api/',
+  fileBaseURL: 'http://2e68bf4badef.ngrok.io/mediafiles/',
+  guestUserName: 'guest@test.com',
+  guestPassword: 'password'
 };
 
 /*

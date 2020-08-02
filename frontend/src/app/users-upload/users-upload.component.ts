@@ -53,7 +53,10 @@ export class UsersUploadComponent implements OnInit {
     if(this.searchQuery) {
       this.isSearch = true;
       this.utility.showSpinner.emit(true);
-      this.userService.searchFile(this.searchQuery).subscribe(
+      let searchPayload = {
+        query: this.searchQuery
+      }
+      this.userService.searchFile(searchPayload).subscribe(
         res => this.getAllMediaPostsSuccess(res),
         error => this.utility.displayError(error)
       )

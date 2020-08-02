@@ -108,7 +108,7 @@
             }
             .search-file-container {
                 position: relative;
-                margin: 0 10px;
+                margin: 0 25px;
                 input {
                     padding: 10px;
                     border: 1px solid gainsboro;
@@ -123,9 +123,10 @@
                
             }
             .clear-search {
-                top: 6px;
+                top: 0px;
                 position: absolute;
                 cursor: pointer;
+                margin: 0 0 0 5px;
             }
         }
     }
