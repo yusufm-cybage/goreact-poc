@@ -6,7 +6,6 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -104,18 +103,18 @@ class Handler extends ExceptionHandler
                 return response()->json(
                 [
                     'errors' => [
-                        'status' => 401,
-                        'message' => 'Unauthenticated.',
+                        'status' => 404,
+                        'message' => 'Not Found',
                     ]
-                ], 401);
+                ], 404);
             }  
             return response()->json(
             [
                 'errors' => [                     
-                    'status' => 401,
-                    'message' => $exception->getMessage(),
+                    'status' => 404,
+                    'message' => 'Not Found',
                 ]
-            ], 401);
+            ], 404);
         }
         elseif($exception instanceof NotFoundHttpException)
         {
