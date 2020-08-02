@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   fileList: any = [];
   fileValue: any;
   baseUrl: any = '';
+  searchQuery: any = '';
+  isSearch: boolean = false;
   constructor(private formBuilder: FormBuilder, 
     private userService: UserService,
     private utility: UtilityService, 
@@ -90,5 +92,26 @@ export class HomeComponent implements OnInit {
 
   trackByFn(index) {
     return index;
+  }
+
+  searchFile() {
+    console.log('called', this.searchQuery)
+    if(this.searchQuery) {
+      this.isSearch = true;
+      this.utility.showSpinner.emit(true);
+      this.userService.searchFile(this.searchQuery).subscribe(
+        res => this.getUsersFileListSuccess(res),
+        error => this.utility.displayError(error)
+      )
+    }
+  }
+
+  resetSearch() {
+    if (this.searchQuery && this.isSearch) {
+      this.searchQuery = '';
+      this.getUsersFileList();
+    } else {
+      this.searchQuery = '';
+    }
   }
 }

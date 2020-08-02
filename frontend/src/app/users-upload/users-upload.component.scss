@@ -9,8 +9,36 @@
                 width: 100%;
                 overflow-x: auto;
             }
-            .users-uploade-title {
+            .users-upload-title {
                 padding: 20px 0;
+                .search-file {
+                    padding: 10px;
+                    text-align: right;
+                    .search-main {
+                        position: relative;
+                    }
+                    .search-file-container {
+                        position: relative;
+                        margin: 0 10px;
+                        input {
+                            padding: 10px;
+                            border: 1px solid gainsboro;
+                            border-radius: 5px;
+                        }
+                        .search-action {
+                            position: absolute;
+                            right: 6px;
+                            top: 0px;
+                            cursor: pointer;
+                        }
+                       
+                    }
+                    .clear-search {
+                        top: 6px;
+                        position: absolute;
+                        cursor: pointer;
+                    }
+                }
             }
             .file-table {
                 border-collapse: collapse;
