@@ -100,7 +100,7 @@ Content-Type:application/json
 X-Requested-With:XMLHttpRequest
 Bearer token required
  
-http://localhost:8000/api/showmediapost/{uuid}
+http://localhost:8000/api/mediapost/user/{uuid}
 
  
 
@@ -116,7 +116,7 @@ Content-Type:application/json
 X-Requested-With:XMLHttpRequest
 Bearer token required
  
-http://localhost:8000/api/search
+http://localhost:8000/api/mediapost/search
 
 query field require
  

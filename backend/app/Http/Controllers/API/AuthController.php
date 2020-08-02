@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use App\User;
 
 /**
  * AuthController class
@@ -26,7 +26,6 @@ class AuthController extends Controller
     */    
     public function register(Request $request)
     {
-
         $validatedData = $request->validate([
             'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
@@ -41,7 +40,6 @@ class AuthController extends Controller
             'message' => 'Register successfully'
         ],201);
     }
-
     /**
      * Login user and create token
      *
@@ -50,7 +48,6 @@ class AuthController extends Controller
      * @param  [boolean] remember_me
      * @return [json] user object
     */
-
     public function login(Request $request)
     {
         $request->validate([
@@ -58,7 +55,6 @@ class AuthController extends Controller
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
-
         $credentials = request(['email', 'password']);
         if(!Auth::attempt($credentials))
         return response()->json([
@@ -73,6 +69,7 @@ class AuthController extends Controller
         return response()->json([
             'name' => $user->name,
             'uuid' => $user->uuid,
+            'isAdmin' => $user->isAdmin,
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
@@ -81,7 +78,6 @@ class AuthController extends Controller
             'message' => 'Login successfully'
         ],200);
     }
-
     /**
      * Logout user (Revoke the token)
      *
@@ -94,7 +90,6 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ],200);
     }
-
     /**
      * Get the authenticated User
      *
@@ -104,5 +99,4 @@ class AuthController extends Controller
     {
         return response()->json($request->user());
     }
-
 }

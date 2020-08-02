@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserAuthTest extends TestCase
 {
-    use RefreshDatabase;
+   // use RefreshDatabase;
 
     public function testRequiredFieldsForRegistration()
     {
@@ -80,6 +80,7 @@ class UserAuthTest extends TestCase
             ->assertJsonStructure([
                 "name",
                 "uuid",
+                "isAdmin",
                 "access_token",
                 "token_type",
                 "expires_at",

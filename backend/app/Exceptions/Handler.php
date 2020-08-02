@@ -2,9 +2,15 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -50,18 +56,77 @@ class Handler extends ExceptionHandler
      * @throws \Throwable
      */
     public function render($request, Throwable $exception)
-    {
-        //return parent::render($request, $exception);       
-
-        return response()->json(
+    { 
+        if ($exception instanceof AuthenticationException) 
+        {
+            return response()->json(
+                [
+                    'errors' => [                        
+                        'status' => 401,
+                        'message' => $exception->getMessage(),
+                    ]
+                ], 401);
+        }
+        elseif($exception instanceof AuthorizationException) 
+        {
+            return response()->json(
+                [
+                    'errors' => [
+                        'status' => 403,
+                        'message' => $exception->getMessage(),
+                    ]
+                ], 403);
+        }
+        elseif($exception instanceof ModelNotFoundException)
+        {
+            return response()->json(
             [
                 'errors' => [
-                    'status' => 401,
-                    'message' => 'Unauthenticated',
+                    'status' => 404,
+                    'message' => $exception->getMessage(),
                 ]
-            ], 401
-        );
+            ], 404);
+        } 
+        elseif($exception instanceof MethodNotAllowedHttpException)
+        {
+            return response()->json(
+            [
+                'errors' => [
+                    'status' => 400,
+                    'message' => $exception->getMessage(),
+                ]
+            ], 404);
+        } 
+        //anyone hit url from broswer return response
+        elseif($exception instanceof RouteNotFoundException)
+        {   
+            if(!$request->expectsJson()){
+                return response()->json(
+                [
+                    'errors' => [
+                        'status' => 401,
+                        'message' => 'Unauthenticated.',
+                    ]
+                ], 401);
+            }  
+            return response()->json(
+            [
+                'errors' => [                     
+                    'status' => 401,
+                    'message' => $exception->getMessage(),
+                ]
+            ], 401);
+        }
+        elseif($exception instanceof NotFoundHttpException)
+        {
+            return response()->json(
+            [
+                'errors' => [
+                    'status' => 404,
+                    'message' => '404 path not found',
+                ]
+            ], 404);
+        }
+        return parent::render($request, $exception); 
     }
-
-  
 }

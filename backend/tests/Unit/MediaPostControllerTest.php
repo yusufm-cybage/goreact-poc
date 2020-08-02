@@ -58,7 +58,7 @@ class MediaPostControllerTest extends TestCase
     {
         $uuid = Auth::user()->uuid;
         
-        $this->json('GET', 'api/showmediapost/'.$uuid,['Accept' => 'application/json'])
+        $this->json('GET', 'api/mediapost/user/'.$uuid,['Accept' => 'application/json'])
         ->assertStatus(200);
     }
     

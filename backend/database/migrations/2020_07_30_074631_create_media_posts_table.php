@@ -18,7 +18,7 @@ class CreateMediaPostsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('file_name');
-            $table->string('file_path');
+            $table->string('file_path')->nullable();
             $table->string('file_type');
             $table->string('title');
             $table->string('tag')->nullable();
