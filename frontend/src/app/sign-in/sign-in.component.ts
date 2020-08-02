@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
       password: ['', [Validators.required, BlankSpaceValidator.validate]],
       username: ['', [Validators.required, EmailValidator.validate]],
     });
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.utility.loggedIn.emit(false);
   }
   
@@ -36,6 +36,7 @@ export class SignInComponent implements OnInit {
         email: value.username,
         password: value.password
       }
+      this.utility.showSpinner.emit(true);
       this.authService.login(loginData).subscribe(
         res => this.loginSuccess(res),
         error => this.utility.displayError(error)
@@ -43,14 +44,27 @@ export class SignInComponent implements OnInit {
     }
   }
 
-  loginSuccess(data) {
+  private loginSuccess(data) {
     if (data.access_token && data.uuid) {
       localStorage.setItem('token', data.access_token);
       localStorage.setItem('uuid', data.uuid);
       localStorage.setItem('name', data.name);
+      if(data.isAdmin == '1') {
+        localStorage.setItem('isAdmin', '1');
+      }
       this.router.navigate(['home']);
       this.utility.loggedIn.emit(true);
       this.notifyService.showSuccess("Login Successfull");
+    } else {
+      this.utility.showSpinner.emit(false);
     }
+  }
+
+  signInAsGuest() {
+    let value = {
+      username: 'nilesh@test.com',
+      password: 'password'
+    };
+    this.onSubmit(value);
   }
 }

@@ -3,11 +3,29 @@
 <!-- Toolbar -->
 <div *ngIf="isLoggedIn" >
     <div class="toolbar" role="banner">
-        <span>Welcome to GoReact</span>
-        <span (click)="logOut()" class="logout">Log Out</span>
+        <div>
+            <span class="welcome" [routerLink]="['home']">Welcome to GoReact</span>
+        </div>
+        <div class="list-menu">
+            <span class="user-menu" *ngIf="isAdmin" [routerLink]="['users-upload']">Users Uploaded Files</span>
+            <span (click)="logOut()" class="user-menu">Log Out</span>
+            <button class="ham-burger" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <div></div>
+                <div></div>
+                <div></div>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngIf="isAdmin">
+                    <span [routerLink]="['users-upload']">Users Uploaded Files</span>
+                </button>
+                <button mat-menu-item>
+                    <span (click)="logOut()" class="logout">Log Out</span>
+                </button>
+              </mat-menu>
+        </div>
     </div>
 </div>
-
+<app-spinner></app-spinner>
 <div [ngClass]="{'apply-padding': isLoggedIn}">
     <router-outlet></router-outlet>
 </div>

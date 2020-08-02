@@ -1,33 +1,14 @@
 
-<div class="home-container">
-    <div class="file-uploader-container">
-        <div class="file-selector">
-            <p class="file-selector-title">Select File to Upload</p>
-            <form [formGroup]="uploadForm">
-                <div class="file-upload-fields">
-                    <input type="text" formControlName="fileTitle" placeholder="File Title">
-                </div>
-                <div  class="file-upload-fields">
-                    <input type="text"  formControlName="fileTag" placeholder="File Tag">
-                </div>
-                <div  class="file-upload-fields">
-                    <input type="text"  formControlName="fileDescription" placeholder="File Description">
-                </div>
-                <input class="file-input" type="file" formControlName="selectedFile" (change)="onFileSelect($event)">
-                <button class="file-action" type="submit"
-                [ngClass]="{'disable-submit': !uploadForm.valid}"
-                [disabled]="!uploadForm.valid" 
-                (click)="onSubmit(uploadForm.value)">Upload</button> 
-            </form>
-        </div>
-    </div>
-
+<div class="users-upload-container">
     <div class="file-list-container">
+        <div class="users-uploade-title">
+            Users Uploaded Files
+        </div>
         <table class="file-table">
             <thead>
                 <tr>
-                    <th>File Name</th>
-                    <!-- <th>Description</th> -->
+                    <th class="file-title">File Name</th>
+                    <th class="uploaded-by">Uploaded By</th>
                 </tr>
             </thead>
             
@@ -36,7 +17,7 @@
                     <tr>
                         <td class="file-title" *ngIf="file?.file_type != 'pdf'"><span (click)="openFile(i)">{{file?.file_name}}</span></td>
                         <td class="file-title" *ngIf="file?.file_type == 'pdf'"><a href="{{file?.filePath}}" target="_blank">{{file?.file_name}}</a></td>
-                        <!-- <td>{{file.description}}</td> -->
+                        <td class="uploaded-by">{{file?.user_id}}</td>
                     </tr>
                     <tr *ngIf="file.isOpen">
                         <div class="media-container" *ngIf="file?.file_type == 'jpeg' || file?.file_type == 'jpg'">
@@ -51,7 +32,7 @@
                 </ng-container>
                 <tr *ngIf="!fileList.length">
                     <td class="no-data-found-first-td">No Data Found&nbsp;</td>
-                    <!-- <td class="no-data-found-second-td">&nbsp;</td> -->
+                    <td class="no-data-found-second-td">&nbsp;</td>
                 </tr>
             </tbody>
         </table>

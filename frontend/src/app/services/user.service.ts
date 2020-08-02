@@ -32,14 +32,17 @@ export class UserService {
       'X-Requested-With':'XMLHttpRequest',
       Authorization :'Bearer ' + localStorage.getItem('token')
     });
-    console.log(data)
     return this.http.post(this.baseURL + 'mediapost', data, { headers: fileheader})
   }
 
   getUserUploadedFiles(id): Observable<any> {
-    return this.http.get(this.baseURL + 'mediapost', {
+    return this.http.get(this.baseURL + 'showmediapost/' + id, {
       headers: this.createHeader()
     });
+  }
+
+  getAllMediaPosts(): Observable<any> {
+    return this.http.get(this.baseURL + 'mediapost', { headers: this.createHeader()})
   }
 
   logOutUser(): Observable<any> {

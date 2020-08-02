@@ -13,11 +13,17 @@ import { NotificationService } from './services/notification.service';
 export class AppComponent {
   title = 'goreact';
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
   constructor(private utility: UtilityService, private userService: UserService, 
     private router: Router, private notifyService : NotificationService) {
     if(localStorage.getItem('token')) {
       this.isLoggedIn = true;
       this.utility.loggedIn.emit(true);
+      if( localStorage.getItem('isAdmin')) {
+        this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
+      }
     } else {
       this.isLoggedIn = false;
       this.utility.loggedIn.emit(false);
@@ -27,20 +33,28 @@ export class AppComponent {
   ngAfterViewInit(): void {
     this.utility.loggedIn.subscribe(item => {
         this.isLoggedIn = item;
+        if( localStorage.getItem('isAdmin')) {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
     })
   }
 
   logOut() {
+    this.utility.showSpinner.emit(true);
     this.userService.logOutUser().subscribe(
       res => this.logOutSuccess(res),
       error => this.utility.displayError(error)
     );
   }
 
-  logOutSuccess(data) {
+  private logOutSuccess(data) {
     this.notifyService.showSuccess("Logout Successfull");
     this.utility.loggedIn.emit(false);
     this.isLoggedIn = false;
+    this.isAdmin = false;
+    this.utility.showSpinner.emit(false)
     this.router.navigate(['sign-in']);
   }
 }

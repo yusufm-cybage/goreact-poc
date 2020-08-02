@@ -1,6 +1,36 @@
 .apply-padding {
     padding-top: 70px;
 }
-.logout {
+.welcome {
     cursor: pointer;
+    outline: 0;
+}
+.list-menu {
+    display: flex;
+    .ham-burger {
+        background: transparent;
+        border: 0;
+        margin: 0 20px;
+        cursor: pointer;
+        display: none;
+        @media only screen and (max-width: 767px) {
+            display: block;
+        }
+
+        div {
+            width: 25px;
+            height: 5px;
+            background-color: #ffffff;
+            margin: 4px 0;
+        }
+    }
+
+    .user-menu {
+        display: block;
+        cursor: pointer;
+        outline: 0;
+        @media only screen and (max-width: 767px) {
+            display:  none;
+        }
+    }
 }
