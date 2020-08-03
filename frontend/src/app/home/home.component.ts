@@ -34,6 +34,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * To get list of file uploaded by users
+   */
   private getUsersFileList() {
     this.utility.showSpinner.emit(true);
     this.userService.getUserUploadedFiles(localStorage.getItem('uuid')).subscribe(
@@ -42,6 +45,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  /**
+   * On success of get list of file uploaded by users
+   * @param res 
+   */
   private getUsersFileListSuccess(res) {
     this.fileList = [];
     if(res && res.data && res.data.length) {
@@ -56,12 +63,20 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * When user clicks on file input
+   * @param event 
+   */
   onFileSelect(event) {
     if (event.target.files.length > 0) {
       this.fileValue = event.target.files[0];
     }
   }
 
+  /**
+   * When user click upload button, and to call upload file API
+   * @param value 
+   */
   onSubmit(value) {
     const formData: FormData = new FormData();
     formData.append('file',this.fileValue ); 
@@ -75,6 +90,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  /**
+   * Called when file uploaded successfully
+   * @param data 
+   */
   private fileUploadSuccess(data) {
     if(data && data.code == 200) {
       this.notyfy.showSuccess('File Uploaded Successfully');
@@ -86,6 +105,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * To show file on click of file name
+   * @param index 
+   */
   openFile(index) {
     this.fileList[index].isOpen = !this.fileList[index].isOpen;
   }
@@ -94,6 +117,9 @@ export class HomeComponent implements OnInit {
     return index;
   }
 
+  /**
+   * Called on search button click
+   */
   searchFile() {
     if(this.searchQuery) {
       this.isSearch = true;
@@ -108,6 +134,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * To reset the search result
+   */
   resetSearch() {
     if (this.searchQuery && this.isSearch) {
       this.searchQuery = '';

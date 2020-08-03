@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { EmailValidator } from 'src/app/shared/validators/email.validators'
 import { BlankSpaceValidator } from '../shared/validators/blank.validator';
 import { NotificationService } from '../services/notification.service';
-import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -14,7 +13,6 @@ import { environment } from '../../environments/environment';
 })
 export class SignInComponent implements OnInit {
   signInForm: FormGroup;
-  guestCredentials: any = {};
   constructor(private formBuilder: FormBuilder,
               private authService: AuthService,
               private utility: UtilityService,
@@ -27,15 +25,15 @@ export class SignInComponent implements OnInit {
     });
     localStorage.clear();
     this.utility.loggedIn.emit(false);
-    this.guestCredentials = {
-      username: environment.guestUserName,
-      password: environment.guestPassword
-    }
   }
   
   ngOnInit(): void {
   }
 
+  /**
+   * To call sign in API
+   * @param value 
+   */
   onSubmit(value) {
     if(value) {
       let loginData = {
@@ -50,6 +48,10 @@ export class SignInComponent implements OnInit {
     }
   }
 
+  /**
+   * On successfull login API
+   * @param data 
+   */
   private loginSuccess(data) {
     if (data.access_token && data.uuid) {
       localStorage.setItem('token', data.access_token);
@@ -64,9 +66,5 @@ export class SignInComponent implements OnInit {
     } else {
       this.utility.showSpinner.emit(false);
     }
-  }
-
-  signInAsGuest() {
-    this.onSubmit(this.guestCredentials);
   }
 }
