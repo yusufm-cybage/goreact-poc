@@ -31,6 +31,7 @@ export class AppComponent {
   }
 
   ngAfterViewInit(): void {
+    // to catch loggedIn event
     this.utility.loggedIn.subscribe(item => {
         this.isLoggedIn = item;
         if( localStorage.getItem('isAdmin')) {
@@ -41,6 +42,9 @@ export class AppComponent {
     })
   }
 
+  /**
+   * Called when user clicks on logout button
+   */
   logOut() {
     this.utility.showSpinner.emit(true);
     this.userService.logOutUser().subscribe(
@@ -49,6 +53,10 @@ export class AppComponent {
     );
   }
 
+  /**
+   * Called when logout success
+   * @param data 
+   */
   private logOutSuccess(data) {
     this.notifyService.showSuccess("Logout Successfull");
     this.utility.loggedIn.emit(false);

@@ -36,6 +36,10 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * To call sign in API
+   * @param value 
+   */
   onSubmit(value) {
     if(value) {
       let loginData = {
@@ -50,6 +54,10 @@ export class SignInComponent implements OnInit {
     }
   }
 
+  /**
+   * On successfull login API
+   * @param data 
+   */
   private loginSuccess(data) {
     if (data.access_token && data.uuid) {
       localStorage.setItem('token', data.access_token);
@@ -66,6 +74,9 @@ export class SignInComponent implements OnInit {
     }
   }
 
+  /**
+   * To call sign in as guest
+   */
   signInAsGuest() {
     this.onSubmit(this.guestCredentials);
   }

@@ -20,6 +20,9 @@ export class UsersUploadComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * To get all mediaposts uploaded by all users
+   */
   private getAllMediaPosts() {
     this.userService.getAllMediaPosts().subscribe(
       res => this.getAllMediaPostsSuccess(res),
@@ -27,6 +30,10 @@ export class UsersUploadComponent implements OnInit {
     );
   }
 
+  /**
+   * Called when ageAllMediaPosts API success
+   * @param data 
+   */
   private getAllMediaPostsSuccess(data) {
     this.fileList = [];
     if(data && data.data && data.data.length) {
@@ -41,6 +48,10 @@ export class UsersUploadComponent implements OnInit {
     }
   }
 
+  /**
+   * To show file on table
+   * @param index 
+   */
   openFile(index) {
     this.fileList[index].isOpen = !this.fileList[index].isOpen;
   }
@@ -49,6 +60,9 @@ export class UsersUploadComponent implements OnInit {
     return index;
   }
 
+  /**
+   * To search the file uploaded by user
+   */
   searchFile() {
     if(this.searchQuery) {
       this.isSearch = true;
@@ -63,6 +77,9 @@ export class UsersUploadComponent implements OnInit {
     }
   }
 
+  /**
+   * To reset the search
+   */
   resetSearch() {
     if (this.searchQuery && this.isSearch) {
       this.searchQuery = '';
