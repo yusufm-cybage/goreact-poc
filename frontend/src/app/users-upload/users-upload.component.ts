@@ -28,8 +28,8 @@ export class UsersUploadComponent implements OnInit {
   }
 
   private getAllMediaPostsSuccess(data) {
+    this.fileList = [];
     if(data && data.data && data.data.length) {
-      this.fileList = [];
       data.data.forEach(item => {
         item.isOpen = false;
         item.filePath = this.baseUrl + item.file_name;

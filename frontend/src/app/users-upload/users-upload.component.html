@@ -19,37 +19,42 @@
                 </div>
             </div>
         </div>
-        <table class="file-table">
-            <thead>
-                <tr>
-                    <th class="file-title">File Name</th>
-                    <th class="uploaded-by">Uploaded By</th>
-                </tr>
-            </thead>
-            
-            <tbody >
-                <ng-container *ngFor="let file of fileList; let i = index; trackBy: trackByFn"> 
+        <div class="file-table-container">
+            <table class="file-table">
+                <thead>
                     <tr>
-                        <td class="file-title" *ngIf="file?.file_type != 'pdf'"><span (click)="openFile(i)">{{file?.file_name}}</span></td>
-                        <td class="file-title" *ngIf="file?.file_type == 'pdf'"><a href="{{file?.filePath}}" target="_blank">{{file?.file_name}}</a></td>
-                        <td class="uploaded-by">{{file?.user?.name}}</td>
+                        <th class="file-title">File Name</th>
+                        <th class="uploaded-by">File Title</th>
+                        <th class="uploaded-by">File Tag</th>
+                        <th class="uploaded-by">File description</th>
+                        <th class="uploaded-by">Uploaded By</th>
                     </tr>
-                    <tr *ngIf="file.isOpen">
-                        <div class="media-container" *ngIf="file?.file_type == 'jpeg' || file?.file_type == 'jpg'">
-                            <img src="{{file?.filePath}}">
-                        </div>
-                        <div class="media-container" *ngIf="file?.file_type == 'mp4'">
-                            <video width="320" height="240" controls>
-                                <source src="{{file?.filePath}}" type="video/mp4">
-                            </video>
-                        </div>
-                    </tr>
-                </ng-container>
-                <tr *ngIf="!fileList.length">
-                    <td class="no-data-found-first-td">No Data Found&nbsp;</td>
-                    <td class="no-data-found-second-td">&nbsp;</td>
-                </tr>
-            </tbody>
-        </table>
+                </thead>
+                
+                <tbody>
+                    <ng-container *ngFor="let file of fileList; let i = index; trackBy: trackByFn"> 
+                        <tr>
+                            <td class="file-title" *ngIf="file?.file_type != 'pdf'"><span (click)="openFile(i)">{{file?.file_name}}</span></td>
+                            <td class="file-title" *ngIf="file?.file_type == 'pdf'"><a href="{{file?.filePath}}" target="_blank">{{file?.file_name}}</a></td>
+                            <td class="uploaded-by">{{file?.title}}</td>
+                            <td class="uploaded-by">{{file?.tag}}</td>
+                            <td class="uploaded-by">{{file?.description}}</td>
+                            <td class="uploaded-by">{{file?.user?.name}}</td>
+                        </tr>
+                        <tr *ngIf="file.isOpen">
+                            <div class="media-container" *ngIf="file?.file_type == 'jpeg' || file?.file_type == 'jpg'">
+                                <img src="{{file?.filePath}}">
+                            </div>
+                            <div class="media-container" *ngIf="file?.file_type == 'mp4'">
+                                <video width="320" height="240" controls>
+                                    <source src="{{file?.filePath}}" type="video/mp4">
+                                </video>
+                            </div>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <div class="no-data-found" *ngIf="!fileList.length">No Data Found</div>
+        </div>
     </div>
 </div>
