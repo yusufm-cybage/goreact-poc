@@ -25,15 +25,7 @@ class MediaPost extends Model
         'tag',
         'description'
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'file_path'
-    ];     
+        
     /**
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -41,7 +33,8 @@ class MediaPost extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','uuid')->withDefault();
-    }    
+    } 
+       
     /**
      * Return a user uuid 
      *
@@ -51,6 +44,7 @@ class MediaPost extends Model
     {
         return User::find($this->attributes['user_id'])->uuid;
     }
+
     /**
      * search function for normal user
      *
@@ -58,15 +52,15 @@ class MediaPost extends Model
      */
     public static function search($id, $query)
     {   
-       return MediaPost::with('user:uuid,name')->where(function($q) use($query) {
+       return MediaPost::where('user_id','=',$id)
+                        ->where(function($q) use($query) {
                                 $q->where('title', 'LIKE', "%$query%")
                                 ->orWhere('tag', 'LIKE', "%$query%")
                                 ->orWhere('description', 'LIKE', "%$query%");
-
-                            })->where('user_id','=',$id)
-                               ->orderBy('created_at')
-                               ->get();
+                            })->orderByDesc('created_at')
+                            ->get();
     }
+
     /**
      * search function for admin user
      *
@@ -78,6 +72,7 @@ class MediaPost extends Model
                         ->where('title', 'LIKE', "%$query%")
                         ->orWhere('tag', 'LIKE', "%$query%")
                         ->orWhere('description', 'LIKE', "%$query%")
+                        ->orderByDesc('created_at')
                         ->get();
     }
 }

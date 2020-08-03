@@ -54,7 +54,7 @@ class UserAuthTest extends TestCase
     public function testSuccessfulRegistration()
     {   
         $userData = [
-            "name" => "John Doe",
+            "name" => "Doe",
             "email" => "doe@example.com",
             "password" => "password",
             "password_confirmation" => "password"

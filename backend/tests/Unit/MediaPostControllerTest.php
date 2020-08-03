@@ -2,18 +2,19 @@
 
 namespace Tests\Unit;
 
+use App\MediaPost;
+use App\User;
+use Auth;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use App\MediaPost;
 use Tests\TestCase;
-use Auth;
 
 class MediaPostControllerTest extends TestCase
 {
     use WithoutMiddleware;
     /**
-     * @covers \App\Http\Controllers\API\MediaPostController::store_mediapost
+     * @covers \App\Http\Controllers\API\MediaPostController::storeMediaPost
      */
     public function testStoreMediaPostSuccess()
     {
@@ -33,7 +34,7 @@ class MediaPostControllerTest extends TestCase
     }
 
     /**
-     * @covers \App\Http\Controllers\API\MediaPostController::store_mediapost
+     * @covers \App\Http\Controllers\API\MediaPostController::storeMediaPost
      */
     public function testStoreMediaPostFailure()
     {
@@ -53,7 +54,7 @@ class MediaPostControllerTest extends TestCase
     }
 
     /**
-     * @covers \App\Http\Controllers\API\MediaPostController::show_mediapost
+     * @covers \App\Http\Controllers\API\MediaPostController::showMediaPost
      */
     public function testShowMediaPostSuccess()
     {   

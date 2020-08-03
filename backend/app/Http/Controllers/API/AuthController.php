@@ -38,8 +38,9 @@ class AuthController extends Controller
             'user' => $user,
             'access_token' => $accessToken,
             'message' => 'Register successfully'
-        ],201);
+        ], 201);
     }
+
     /**
      * Login user and create token
      *
@@ -76,8 +77,9 @@ class AuthController extends Controller
                 $tokenResult->token->expires_at
             )->toDateTimeString(),
             'message' => 'Login successfully'
-        ],200);
+        ], 200);
     }
+
     /**
      * Logout user (Revoke the token)
      *
@@ -88,8 +90,9 @@ class AuthController extends Controller
         $request->user()->token()->revoke();
         return response()->json([
             'message' => 'Successfully logged out'
-        ],200);
+        ], 200);
     }
+
     /**
      * Get the authenticated User
      *

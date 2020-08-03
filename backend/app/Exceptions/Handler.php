@@ -122,7 +122,7 @@ class Handler extends ExceptionHandler
             [
                 'errors' => [
                     'status' => 404,
-                    'message' => '404 path not found',
+                    'message' => 'Not Found',
                 ]
             ], 404);
         }

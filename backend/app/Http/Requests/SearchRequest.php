@@ -15,6 +15,7 @@ class SearchRequest extends FormRequest
     {
         return true;
     }
+
     /**
      * customised the message for keys
      *
@@ -26,6 +27,7 @@ class SearchRequest extends FormRequest
             'query.required' => 'The search field not blank when search apply.'
         ];
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
