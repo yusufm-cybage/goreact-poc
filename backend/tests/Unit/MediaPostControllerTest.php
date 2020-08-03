@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use App\MediaPost;
@@ -10,7 +11,7 @@ use Auth;
 
 class MediaPostControllerTest extends TestCase
 {
-    
+    use WithoutMiddleware;
     /**
      * @covers \App\Http\Controllers\API\MediaPostController::store_mediapost
      */
@@ -55,8 +56,10 @@ class MediaPostControllerTest extends TestCase
      * @covers \App\Http\Controllers\API\MediaPostController::show_mediapost
      */
     public function testShowMediaPostSuccess()
-    {
-        $uuid = Auth::user()->uuid;
+    {   
+        $user = factory(User::class)->create();
+        Auth::loginUsingId($user->id, true);
+        $uuid = Auth::user()->uuid;         
         
         $this->json('GET', 'api/mediapost/user/'.$uuid,['Accept' => 'application/json'])
         ->assertStatus(200);

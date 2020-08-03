@@ -53,7 +53,7 @@ class MediaPostController extends Controller
         if($validator->fails()) 
         { 
             $data['errors'] = $validator->messages()->getMessages();
-            $responseCode = 401;
+            $responseCode = 422;
             $responseMsg='Error! file type not allowed, jpg,pdf max(5MB) or mp4(max 10MB) only';
         }
         else{
