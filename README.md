@@ -58,7 +58,7 @@
  - Details and commands to setup and run
    - Change your directory to Frontend folder
    - Install dependencies using `npm install` command
-   - Update your API Base URL in environment file
+   - Set API Base URL in environment file. Currently the default URL is set 'http://localhost:8000/'
    - Start your development environment using `ng serve`
    - To generate build use `ng build`. Use the `--prod` flag for a production build.
 
