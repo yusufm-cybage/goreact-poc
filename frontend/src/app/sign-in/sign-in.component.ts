@@ -6,6 +6,21 @@ import { Router } from '@angular/router';
 import { EmailValidator } from 'src/app/shared/validators/email.validators'
 import { BlankSpaceValidator } from '../shared/validators/blank.validator';
 import { NotificationService } from '../services/notification.service';
+export interface LoginPara {
+  username: string;
+  password: string;
+}
+
+export interface LoginSuccess {
+  access_token: string;
+  expires_at: string;
+  isAdmin: number;
+  message: string;
+  name: string;
+  token_type: string;
+  uuid: string;
+}
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -34,7 +49,7 @@ export class SignInComponent implements OnInit {
    * To call sign in API
    * @param value 
    */
-  onSubmit(value) {
+  onSubmit(value: LoginPara) {
     if(value) {
       let loginData = {
         email: value.username,
@@ -52,12 +67,12 @@ export class SignInComponent implements OnInit {
    * On successfull login API
    * @param data 
    */
-  private loginSuccess(data) {
+  private loginSuccess(data: LoginSuccess) {
     if (data.access_token && data.uuid) {
       localStorage.setItem('token', data.access_token);
       localStorage.setItem('uuid', data.uuid);
       localStorage.setItem('name', data.name);
-      if(data.isAdmin == '1') {
+      if(data.isAdmin == 1) {
         localStorage.setItem('isAdmin', '1');
       }
       this.router.navigate(['home']);
