@@ -43,9 +43,10 @@
 ## Prerequisites
  - System requirements
  - A server application such as Apache or Nginx to run Laravel api server.
- - PHP 7.2 and Laravel 7
+ - PHP 7.2 and MySQL 5.7
+ - Composer for dependency manager
  - XDebug must be enabled with PHP 7.2 to generate the code coverage.
- - Angular 9 version 
+ - Laravel 7 Angular 9 version 
 
 ## Installation
 
