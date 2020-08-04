@@ -2,14 +2,35 @@
 
 ## goreact-poc
 
-## runing backend
+## pre-requisite
+
+	php 7.2 , Mysql 5.7 or above
+
+## setup backend
 
 open command prompt 
 
 goto backend folder on root folder hit following command
 
 ```bash
+$cd backend
+
+$composer install
+
+setup database name in env file
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=goreact
+DB_USERNAME=root
+DB_PASSWORD=
+
+$php artisan migrate:fresh --seed
+$php artisan passport:install
 $php artisan serve
+
+
 ```
 
 
