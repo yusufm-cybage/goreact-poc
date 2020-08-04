@@ -2,37 +2,65 @@
 
 ## goreact-poc
 
-##Functionalities
+## Folder structure 
+	There are two sperate folders in this repo
+	1. frontend
+	2. backend
+	
+	frontend - This folder contains the UI. The frontend code is developed using Angular 7
+	backend - This folder contails the API. The backend code is developed using Laravel 7 framework using PHP 7.2
 
-Login Mechanism
+## Functionality implemented
+ - Login/Logout functionality
+	- There are 2 types of users : 
+		1. Admin user
+		2. Normal user
+		
+		- Credentials for Admin user are :
+			username:admin@test.com
+			password:password
+	
+		- Credentials for Normal user are :
+			username:johndoe@test.com
+			password:password
+		
+ - Upload files form
+	- Supported files that can be uploaded are of MIME type jpg, pdf and mp4
 
-Upload mediaFiles
+ - Listing of files uploaded by the user 
+ - Search for uploaded files based in name, tag or description of the file.
+ - For admin user only :- 
+	- List of all the files that have been uploaded by all the users.
+ 
+## URL Parameters
+	
+## Functionality excluded 
+ - Few functionality have not been implemented for this PoC
+	1. Access logs are not implemented.
+	2. Event logs are not implemented.
+	3. Tests for default framework files of Laravel are not written.
 
-View MediaFiles(admin or user wise based on role)
+## Prerequisites
+ - System requirements
+ - A server application such as Apache or Nginx to run Laravel api server.
+ - PHP 7.2 and Laravel 7
+ - XDebug must be enabled with PHP 7.2 to generate the code coverage.
+ - Angular 7 version 
 
-View MediaFiles userwise(admin level UI implementation pending)
+## Backend setup and Features
+ - Details and commands to run
+ - Query Optimization: using laravel eloquent query mechanism for retriving details.
+ - Backend Security aspect
+   - While viewing user wise media file id encrypted in url and entire application.
+   - Authentication required while fetching all url except login.
 
-Search MediaUploads (admin or user wise based on role)
+## Frontend setup
+ - Details and commands to setup and run
 
-LogOut mechanism
-
-Register Mechanism(api created UI implementation pending)
-
-##Security aspect
-
-while viewing user wise media file id encrypted in url and entire application.
-
-Authentication required while fetch all url except login, put a middleware to access it.
-
-admin check put in business login not on UI level.
-
-response code/ error code place for each request.
-
-##Query Optimization
-
-use laravel eloquent query mechanism for retriving details.
-
-
-##URL Parameters
-
-all url detail put in backend/README.md files.
+## PHPunit Setup and generating Code Coverage
+ - PHPUnit 8 is used to implement Unit testing in API.
+ - command to run PHPUnit Testcases : 
+	```vendor\bin\phpunit```
+ - command to generate code coverage : 
+	```vendor\bin\phpunit --coverage-html codecoverage```
+	 - This command will create the coverage report in folder codecoverage
