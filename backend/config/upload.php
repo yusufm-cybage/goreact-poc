@@ -16,5 +16,5 @@ return [
     'MAXSIZE_2MB'   => '2048', 
     'MAXSIZE_5MB'   => '5242', 
     'MAXSIZE_10MB'  => '10240',
-    'PATH'          => public_path('/mediafiles')
+    'PATH'          => public_path('/mediafiles'),
 ];

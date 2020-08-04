@@ -29,15 +29,17 @@ class AuthController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:55',
             'email' => 'email|required|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
         ]);
+
         $validatedData['password'] = Hash::make($request->password);
         $user = User::create($validatedData);
         $accessToken = $user->createToken('authToken')->accessToken;
+
         return response([ 
             'user' => $user,
             'access_token' => $accessToken,
-            'message' => 'Register successfully'
+            'message' => 'Register successfully',
         ], 201);
     }
 
@@ -54,19 +56,26 @@ class AuthController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'remember_me' => 'boolean'
+            'remember_me' => 'boolean',
         ]);
+
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials))
         return response()->json([
-            'message' => 'Unauthorized'
+            'message' => 'Unauthorized',
         ], 401);
+
         $user = $request->user();
         $tokenResult = $user->createToken('authToken');
         $token = $tokenResult->token;
+
         if ($request->remember_me)
-        $token->expires_at = Carbon::now()->addWeeks(1);
+        { 
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        }
+
         $token->save();
+
         return response()->json([
             'name' => $user->name,
             'uuid' => $user->uuid,
@@ -76,7 +85,7 @@ class AuthController extends Controller
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
             )->toDateTimeString(),
-            'message' => 'Login successfully'
+            'message' => 'Login successfully',
         ], 200);
     }
 
@@ -88,8 +97,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
+        
         return response()->json([
-            'message' => 'Successfully logged out'
+            'message' => 'Successfully logged out',
         ], 200);
     }
 

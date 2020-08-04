@@ -28,9 +28,9 @@ class MediaPostControllerTest extends TestCase
             'tag' =>"Demo tag",
             'description' =>"Demo Description",
         ];
+
         $this->json('POST', 'api/mediapost', $mediaParams)
-            ->assertStatus(200);
-            
+            ->assertStatus(200);            
     }
 
     /**
@@ -41,16 +41,16 @@ class MediaPostControllerTest extends TestCase
         Storage::fake('public');
 
         $file = UploadedFile::fake()->image('goreact.jpg')->size(3000);
-        $fileName  = time().'.'.$file->extension();
+        $fileName  = time() . '.' . $file->extension();
         $mediaParams = [
             'file' => $fileName,
             'title' =>"Demo file",
             'tag' =>"Demo tag",
             'description' =>"Demo Description",
         ];
+
         $this->json('POST', 'api/mediapost', $mediaParams)
             ->assertStatus(422);
-            
     }
 
     /**
@@ -62,7 +62,7 @@ class MediaPostControllerTest extends TestCase
         Auth::loginUsingId($user->id, true);
         $uuid = Auth::user()->uuid;         
         
-        $this->json('GET', 'api/mediapost/user/'.$uuid,['Accept' => 'application/json'])
+        $this->json('GET', 'api/mediapost/user/' . $uuid, ['Accept' => 'application/json'])
         ->assertStatus(200);
     }
 
@@ -74,7 +74,7 @@ class MediaPostControllerTest extends TestCase
         $user = factory(User::class)->create();
         Auth::loginUsingId($user->id, true);
         
-        $this->json('GET', 'api/mediapost',['Accept' => 'application/json'])
+        $this->json('GET', 'api/mediapost', ['Accept' => 'application/json'])
         ->assertStatus(200);
     }
     
@@ -88,7 +88,7 @@ class MediaPostControllerTest extends TestCase
         ]);
         Auth::loginUsingId($user->id, true);
         
-        $this->json('GET', 'api/mediapost',['Accept' => 'application/json'])
+        $this->json('GET', 'api/mediapost', ['Accept' => 'application/json'])
         ->assertStatus(200);
     }
     
@@ -101,14 +101,13 @@ class MediaPostControllerTest extends TestCase
         Auth::loginUsingId($user->id, true);
         $mediaPost = factory(MediaPost::class)->create([
             'user_id' => $user->id,
-            'title'   => "Demo title"
+            'title'   => "Demo title",
         ]);
         $searchParams = [
-            'query' =>"Demo title"
+            'query' =>"Demo title",
         ];
         
-        $this->json('POST', 'api/mediapost/search',$searchParams)
+        $this->json('POST', 'api/mediapost/search', $searchParams)
         ->assertStatus(200);
     }
-    
 }

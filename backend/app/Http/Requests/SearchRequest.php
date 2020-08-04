@@ -24,7 +24,7 @@ class SearchRequest extends FormRequest
     public function messages()
     {
         return[
-            'query.required' => 'The search field not blank when search apply.'
+            'query.required' => 'The search field not blank when search apply.',
         ];
     }
 
@@ -36,7 +36,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'query' => 'required|max:25'
+            'query' => 'required|max:25',
         ];
     }
 }

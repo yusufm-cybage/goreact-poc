@@ -2,15 +2,15 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
-use App\User;
 use Illuminate\Support\Facades\Hash;
+use Tests\TestCase;
+
 
 class UserAuthTest extends TestCase
-{
-   // use RefreshDatabase;
+{    
     /**
      * test required fields for registration.
      *
@@ -29,6 +29,7 @@ class UserAuthTest extends TestCase
                 ]
             ]);
     }
+
     /**
      * test must enter email and password.
      *
@@ -46,6 +47,7 @@ class UserAuthTest extends TestCase
                 ]
             ]);
     }
+
     /**
      * test successful registration.
      *
@@ -57,10 +59,10 @@ class UserAuthTest extends TestCase
             "name" => "Doe",
             "email" => "doe@example.com",
             "password" => "password",
-            "password_confirmation" => "password"
+            "password_confirmation" => "password",
         ];
 
-        $this->json('POST', 'api/register',$userData, ['Accept' => 'application/json'])
+        $this->json('POST', 'api/register', $userData, ['Accept' => 'application/json'])
             ->assertStatus(201)
             ->assertJsonStructure([
                 "user" => [
@@ -69,18 +71,18 @@ class UserAuthTest extends TestCase
                         "uuid",
                         "updated_at",
                         "created_at",
-                        "id"
+                        "id",
                     ],
                 "access_token",
-                "message"
+                "message",
             ]);;
     }
+
     /**
      * test successful login
      *
      * @return array
      */
-
     public function testSuccessfulLogin()
     {
         $user = factory(User::class)->create([
@@ -100,11 +102,12 @@ class UserAuthTest extends TestCase
                 "access_token",
                 "token_type",
                 "expires_at",
-                "message"
-            ]);;
+                "message",
+            ]);
 
         $this->assertAuthenticated();
     }
+
     /**
      * test missing input in registration
      *
@@ -115,13 +118,10 @@ class UserAuthTest extends TestCase
         $userData = [
             "name" => "John Doe",            
             "password" => "password",
-            "password_confirmation" => "password"
+            "password_confirmation" => "password",
         ];
 
-        $this->json('POST', 'api/register',$userData, ['Accept' => 'application/json',])
+        $this->json('POST', 'api/register', $userData, ['Accept' => 'application/json'])
             ->assertStatus(422);
     }
-
-    
-    
 }

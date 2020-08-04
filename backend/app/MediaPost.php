@@ -22,7 +22,7 @@ class MediaPost extends Model
         'file_type',
         'title',
         'tag',
-        'description'
+        'description',
     ];
         
     /**
@@ -31,7 +31,7 @@ class MediaPost extends Model
     */
     public function user()
     {
-        return $this->belongsTo(User::class,'user_id','uuid')->withDefault();
+        return $this->belongsTo(User::class, 'user_id', 'uuid')->withDefault();
     } 
        
     /**
