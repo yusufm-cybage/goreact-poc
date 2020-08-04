@@ -98,3 +98,6 @@ $php artisan serve
  - command to generate code coverage : 
 	```vendor\bin\phpunit --coverage-html codecoverage```
 	 - This command will create the coverage report in folder codecoverage
+
+## Security 
+ - right now files are access via url directly, in future we taken care to not access directly only authorised user can access, from server level or application level whatever best practices we can implement this concern.
