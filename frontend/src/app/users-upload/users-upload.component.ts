@@ -24,6 +24,7 @@ export class UsersUploadComponent implements OnInit {
    * To get all mediaposts uploaded by all users
    */
   private getAllMediaPosts() {
+    this.utility.showSpinner.emit(true);
     this.userService.getAllMediaPosts().subscribe(
       res => this.getAllMediaPostsSuccess(res),
       error => this.utility.displayError(error)
