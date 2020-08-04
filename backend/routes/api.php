@@ -25,5 +25,4 @@ use App\Http\Controllers\API\MediaPostController;
     Route::middleware('auth:api')->post('/mediapost/search', 'API\MediaPostController@search');
     Route::middleware('auth:api')->post('/mediapost', 'API\MediaPostController@storeMediaPost');
     Route::middleware('auth:api')->get('/mediapost', 'API\MediaPostController@mediaAll');
-    Route::middleware('auth:api')->get('/mediapost/user/{uuid}', 'API\MediaPostController@showMediaPost');   
-    
+    Route::middleware('auth:api')->get('/mediapost/user/{uuid}', 'API\MediaPostController@showMediaPost');
