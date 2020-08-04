@@ -18,6 +18,9 @@
                 [ngClass]="{'disable-submit': !uploadForm.valid}"
                 [disabled]="!uploadForm.valid" 
                 (click)="onSubmit(uploadForm.value)">Upload</button> 
+
+                <button class="file-action cancel-file-action" type="button"
+                (click)="cancel()">Cancel</button> 
             </form>
         </div>
     </div>

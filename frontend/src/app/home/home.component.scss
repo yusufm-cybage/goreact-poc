@@ -28,6 +28,11 @@
                 font-weight: bold;
                 outline: none;
             }
+            .cancel-file-action {
+                float: right;
+                background: #ffffff;
+                color: #3B99D4;
+            }
             .file-upload-fields {
                 padding: 10px 0;
                 display: flex;
@@ -127,6 +132,7 @@
             .file-view-indicator {
                 text-align: left;
                 font-size: 14px;
+                padding: 10px 0 0;
             }
         }
 
