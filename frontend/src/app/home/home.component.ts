@@ -145,4 +145,12 @@ export class HomeComponent implements OnInit {
       this.searchQuery = '';
     }
   }
+
+  /**
+   * To reset the file upload form
+   */
+  cancel() {
+    this.uploadForm.reset();
+    this.fileValue = '';
+  }
 }
