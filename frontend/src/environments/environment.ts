@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://e76a437f0c90.ngrok.io/api/',
-  fileBaseURL: 'http://e76a437f0c90.ngrok.io/mediafiles/',
+  baseURL: 'http://localhost:8000/api/',
+  fileBaseURL: 'http://localhost:8000/mediafiles/',
 };
 
 /*

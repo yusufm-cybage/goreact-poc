@@ -7,7 +7,7 @@
 	1. frontend
 	2. backend
 	
-	frontend - This folder contains the UI. The frontend code is developed using Angular 7
+	frontend - This folder contains the UI. The frontend code is developed using Angular 9
 	backend - This folder contails the API. The backend code is developed using Laravel 7 framework using PHP 7.2
 
 ## Functionality implemented
@@ -17,12 +17,12 @@
 		2. Normal user
 		
 		- Credentials for Admin user are :
-			username:admin@test.com
-			password:password
+			username:```admin@test.com```
+			password:```password```
 	
 		- Credentials for Normal user are :
-			username:johndoe@test.com
-			password:password
+			username:```johndoe@test.com```
+			password:```password```
 		
  - Upload files form
 	- Supported files that can be uploaded are of MIME type jpg, pdf and mp4
@@ -45,7 +45,7 @@
  - A server application such as Apache or Nginx to run Laravel api server.
  - PHP 7.2 and Laravel 7
  - XDebug must be enabled with PHP 7.2 to generate the code coverage.
- - Angular 7 version 
+ - Angular 9 version 
 
 ## Backend setup and Features
  - Details and commands to run
@@ -56,6 +56,11 @@
 
 ## Frontend setup
  - Details and commands to setup and run
+   - Change your directory to Frontend folder
+   - Install dependencies using `npm install` command
+   - Set API Base URL and File Base URL in environment file. Currently the default URL is set 'http://localhost:8000/'
+   - Start your development environment using `ng serve`
+   - To generate build use `ng build`. Use the `--prod` flag for a production build.
 
 ## PHPunit Setup and generating Code Coverage
  - PHPUnit 8 is used to implement Unit testing in API.
