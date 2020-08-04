@@ -60,7 +60,7 @@
    - Install dependencies using `npm install` command
    - Update your API Base URL in environment file
    - Start your development environment using `ng serve`
-   - To generate buid use `ng build`. Use the `--prod` flag for a production build.
+   - To generate build use `ng build`. Use the `--prod` flag for a production build.
 
 ## PHPunit Setup and generating Code Coverage
  - PHPUnit 8 is used to implement Unit testing in API.
