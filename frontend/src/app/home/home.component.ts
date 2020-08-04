@@ -5,6 +5,24 @@ import { UtilityService } from '../services/utility.service';
 import { BlankSpaceValidator } from '../shared/validators/blank.validator';
 import { NotificationService } from '../services/notification.service';
 import { environment } from '../../environments/environment'
+export interface FileListArray {
+  code: number;
+  data: Array<any>;
+  message: string;
+}
+
+export interface UploadFileValues {
+  fileTitle: string;
+  fileTag: string;
+  fileDescription: string
+}
+
+export interface FileUploadSuccess {
+  code: number;
+  data: Array<any>;
+  message: string;
+}
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -49,7 +67,7 @@ export class HomeComponent implements OnInit {
    * On success of get list of file uploaded by users
    * @param res 
    */
-  private getUsersFileListSuccess(res) {
+  private getUsersFileListSuccess(res: FileListArray) {
     this.fileList = [];
     if(res && res.data && res.data.length) {
       res.data.forEach(item => {
@@ -77,7 +95,7 @@ export class HomeComponent implements OnInit {
    * When user click upload button, and to call upload file API
    * @param value 
    */
-  onSubmit(value) {
+  onSubmit(value: UploadFileValues) {
     const formData: FormData = new FormData();
     formData.append('file',this.fileValue ); 
     formData.append('title', value.fileTitle);
@@ -94,7 +112,7 @@ export class HomeComponent implements OnInit {
    * Called when file uploaded successfully
    * @param data 
    */
-  private fileUploadSuccess(data) {
+  private fileUploadSuccess(data: FileUploadSuccess) {
     if(data && data.code == 200) {
       this.notyfy.showSuccess('File Uploaded Successfully');
       this.uploadForm.reset();

@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { UtilityService } from '../services/utility.service';
 import { environment } from '../../environments/environment';
+export interface FileListArray {
+  code: string;
+  data: Array<any>;
+  message: string;
+}
+
 @Component({
   selector: 'app-users-upload',
   templateUrl: './users-upload.component.html',
@@ -35,7 +41,7 @@ export class UsersUploadComponent implements OnInit {
    * Called when ageAllMediaPosts API success
    * @param data 
    */
-  private getAllMediaPostsSuccess(data) {
+  private getAllMediaPostsSuccess(data: FileListArray) {
     this.fileList = [];
     if(data && data.data && data.data.length) {
       data.data.forEach(item => {
