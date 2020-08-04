@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  baseURL: 'http://localhost:3000/api/',
-  fileBaseURL: 'http://8338a2004761.ngrok.io/mediafiles/',
+  baseURL: 'http://localhost:8000/api/',
+  fileBaseURL: 'http://localhost:8000/mediafiles/',
 };
