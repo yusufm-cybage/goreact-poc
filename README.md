@@ -17,12 +17,12 @@
 		2. Normal user
 		
 		- Credentials for Admin user are :
-			username:admin@test.com
-			password:password
+			username:```admin@test.com```
+			password:```password```
 	
 		- Credentials for Normal user are :
-			username:johndoe@test.com
-			password:password
+			username:```johndoe@test.com```
+			password:```password```
 		
  - Upload files form
 	- Supported files that can be uploaded are of MIME type jpg, pdf and mp4
