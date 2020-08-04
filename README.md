@@ -98,7 +98,10 @@ $php artisan serve
 	```vendor\bin\phpunit```
  - command to generate code coverage : 
 	```vendor\bin\phpunit --coverage-html codecoverage```
-	 - This command will create the coverage report in folder codecoverage
+	 - This command will create the coverage report in folder codecoverage	 
+ - We can use build.xml to configure PHPUnit with CI/CD tool such as Jenkins that would run phpunit while determining the pipeline when code is pushed to repo.
 
 ## Security 
- - right now files are access via url directly, in future we taken care to not access directly only authorised user can access, from server level or application level whatever best practices we can implement this concern.
+ - We have implmented Laravel passport to achieve OAuth authentication. Due to which we are able to achieve maximum encryption of user data.
+ - To access the user details we are not using user id but instead we are using UUID for secure profile access.
+ - File names are also encrypted and accessed so that they cannot be directly accessed.
