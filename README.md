@@ -98,8 +98,11 @@ $php artisan serve
 	```vendor\bin\phpunit```
  - command to generate code coverage : 
 	```vendor\bin\phpunit --coverage-html codecoverage```
-	 - This command will create the coverage report in folder codecoverage	 
+	 - This command will create the coverage report in folder codecoverage
+
+## CI/CD using PHPUnit
  - We can use build.xml to configure PHPUnit with CI/CD tool such as Jenkins that would run phpunit while determining the pipeline when code is pushed to repo.
+ - Also we can configure PHP_CodeSniffer, phpDox, PHPMD to configure the coding standards that would be implemented while a build is executed in the deployment pipeline.
 
 ## Security 
  - We have implmented Laravel passport to achieve OAuth authentication. Due to which we are able to achieve maximum encryption of user data.
