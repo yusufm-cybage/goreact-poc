@@ -47,8 +47,37 @@
  - XDebug must be enabled with PHP 7.2 to generate the code coverage.
  - Angular 9 version 
 
+## Installation
+
+```bash
+$git clone https://github.com/yusufm-cybage/goreact-poc.git
+$cd root folder i.e goreact-poc
+
+```
 ## Backend setup and Features
- - Details and commands to run
+
+run the following commands
+
+```bash
+$cd backend
+
+$composer install
+
+setup database name in env file
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=goreact
+DB_USERNAME=root
+DB_PASSWORD=
+
+$php artisan migrate:fresh --seed
+$php artisan passport:install
+$php artisan serve
+
+```
+
  - Query Optimization: using laravel eloquent query mechanism for retriving details.
  - Backend Security aspect
    - While viewing user wise media file id encrypted in url and entire application.
