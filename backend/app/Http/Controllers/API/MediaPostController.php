@@ -37,7 +37,7 @@ class MediaPostController extends Controller
             $videoMimes = ['video/mp4'];
             $userFileMimetype = $file->getMimeType();
             //Validate Image/Pdf
-            if(in_array($userFileMimetype, $fileMimes))
+            if (in_array($userFileMimetype, $fileMimes))
             { 			
                 $fileValidate = 'required|mimes:jpeg,jpg,pdf|max:'.config('upload.MAXSIZE_2MB');
             } 		
@@ -52,11 +52,11 @@ class MediaPostController extends Controller
             'title'      => 'required',
             'description'=> 'required'
         ]);
-        if($validator->fails()) 
+        if ($validator->fails()) 
         { 
             $data['errors'] = $validator->messages()->getMessages();
             $responseCode = 422;
-            $responseMsg = config('upload.ERROR');
+            $responseMsg = 'Error! file type not allowed, jpg,pdf max(2MB) or mp4(max 10MB) only';
         }
         else 
         {
@@ -76,7 +76,7 @@ class MediaPostController extends Controller
                 $mediaPost->description = trim($request->description);
                 $mediaPost->save();
             }
-            catch(\Exception $ex)
+            catch (\Exception $ex)
             {
                 $responseCode = 401;
                 $responseMsg = $ex->getMessage();
@@ -88,7 +88,7 @@ class MediaPostController extends Controller
             'code' => $responseCode,
             'message' => $responseMsg,
             'data' => $data
-        ], $responseCode)->header('Content-Type',"application/json");
+        ], $responseCode)->header('Content-Type', "application/json");
     }
 
     /**
@@ -99,7 +99,7 @@ class MediaPostController extends Controller
     {   
         $errorMsg = '';
         $data = array();
-        if(Auth::user()->isAdmin == 1)
+        if (Auth::user()->isAdmin == 1)
         {
             $data = MediaPost::with('user:uuid,name')
             ->orderByDesc('created_at')
@@ -116,7 +116,7 @@ class MediaPostController extends Controller
             'code' => 200,
             'message' => 'success',
             'data' => $data
-        ], 200)->header('Content-Type',"application/json");
+        ], 200)->header('Content-Type', "application/json");
     }
 
     /**
@@ -127,15 +127,15 @@ class MediaPostController extends Controller
      */
     public function showMediaPost($userId)
     { 
-        $user = User::where('uuid',$userId)->first();
-        if(!empty($user)) 
+        $user = User::where('uuid', $userId)->first();
+        if (!empty($user)) 
         {
             $data = $user->mediaPosts()->get();
             return response()->json([
                 'code' => 200,
                 'message' => 'Success',
                 'data' => $data
-             ], 200)->header('Content-Type',"application/json");
+             ], 200)->header('Content-Type', "application/json");
         }
         else
         {
@@ -143,7 +143,7 @@ class MediaPostController extends Controller
                 'code' => 404,
                 'message' => 'uuid mismatched or not found',
                 'data' => []
-             ], 404)->header('Content-Type',"application/json");
+             ], 404)->header('Content-Type', "application/json");
         }
     }
    
@@ -157,7 +157,7 @@ class MediaPostController extends Controller
     { 
         $query = $request['query'];
         $searchResults = [];
-        if(Auth::user()->isAdmin == 1){
+        if (Auth::user()->isAdmin == 1){
              $searchResults = MediaPost::searchByAdmin($query);
         }
         else{

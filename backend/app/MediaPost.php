@@ -18,8 +18,7 @@ class MediaPost extends Model
      */
     protected $fillable = [
         'user_id',
-        'file_name',
-        'file_path',       
+        'file_name',             
         'file_type',
         'title',
         'tag',

@@ -16,6 +16,5 @@ return [
     'MAXSIZE_2MB'   => '2048', 
     'MAXSIZE_5MB'   => '5242', 
     'MAXSIZE_10MB'  => '10240',
-    'PATH'          => public_path('/mediafiles'),
-    'ERROR'         => 'Error! file type not allowed, jpg,pdf max(2MB) or mp4(max 10MB) only'
+    'PATH'          => public_path('/mediafiles')
 ];
