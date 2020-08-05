@@ -1,6 +1,5 @@
  
-
-## goreact-poc
+# goreact-poc
 
 ## Folder structure 
 	There are two sperate folders in this repo
@@ -9,6 +8,8 @@
 	
 	frontend - This folder contains the UI. The frontend code is developed using Angular 9
 	backend - This folder contails the API. The backend code is developed using Laravel 7 framework using PHP 7.2
+## Demo
+ - [Walkthrough Demo](demo_goreact.mp4)
 
 ## Functionality implemented
  - Login/Logout functionality
