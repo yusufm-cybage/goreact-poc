@@ -90,8 +90,8 @@ $php artisan serve
    - Change your directory to Frontend folder
    - Install dependencies using `npm install` command
    - Set API Base URL and File Base URL in environment file. Currently the default URL is set 'http://localhost:8000/'
-   - Start your development environment using `ng serve`
-   - To generate build use `ng build`. Use the `--prod` flag for a production build.
+   - Start your development environment using `npm start`
+   - To generate build use `npm build`. Use the `--prod` flag for a production build.
 
 ## PHPunit Setup and generating Code Coverage
  - PHPUnit 8 is used to implement Unit testing in API.
